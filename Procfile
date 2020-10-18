@@ -1,1 +1,1 @@
-web: gunicorn Assignment1.wsgi
+web: gunicorn FindYourPet.wsgi
