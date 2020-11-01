@@ -1,0 +1,48 @@
+{% extends "user_layout/layout_Front.html" %}
+{% load static %}
+{% block body %}
+<div class="wrapper">
+    <div class="myform">
+        <div id="brief">
+            <div id="brief-short">
+                <i class="fas fa-info-circle"></i>
+                <h1>F<br>i<br>n<br>d<br>Y<br>o<br>u<br>r<br>P<br>e<br>t</h1>
+            </div>
+            <div id="brief-long">
+                <h1>Why you should register?</h1>
+                <p>
+                    You will have the following benefits.
+                    <li>You get to create your own profile page.</li>
+                    <li>You can post on our Pet.</li>
+                    <li>You will love this place <3 .</li>
+                </p>
+            </div>
+        </div>
+        <form action="{% url 'ownregister' %}" method="POST" enctype="multipart/form-data" id="register">
+            {% csrf_token %}
+            <h1>Registeration</h1>
+            <div id="upload-wrapper">
+            <div id="upload-preview"></div>
+            <label for="profile" title="upload your pic"><i id="regis-icon"class="fas fa-plus-circle"></i></label>
+            <input type="file" name="profile" id="profile" onchange="previewImageFixed(event)" accept=".png, .jpg, .jpeg">
+            </div>
+          <label for="name" class="label1">Name</label>
+          <label for="surname">Surname</label><br>
+            <input type="text" placeholder="Name" name="name">
+            <input type="text" placeholder="Surname" name="surname"><br>
+          <label for="name" class="label1">Email</label><br>
+            <input type="text" placeholder="Email" name="email" id="longinput"><br>
+          <label for="name" class="label1">Phone Number</label><br>
+            <input type="text" placeholder="Phone" name="phone" id="longinput"><br>
+            <label for="username" class="label2">Username</label>
+            <label for="password">Password</label><br>
+            <input type="text" placeholder="Username" name="username">
+             <input type="password" placeholder="Password" name="password"><br>
+          <label for="password">Confirm Password</label><br>
+            <input type="password" placeholder="Confirm Password" name="confirm_password">
+            <button type="submit" value="register">Register</button>
+        </form>
+    </div>
+</div>
+<script src={% static '/js/image-preview.js'%}></script>
+{% endblock %}

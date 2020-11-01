@@ -1,0 +1,18 @@
+{% extends "user_layout/layout_Main.html" %}
+{% load static %}
+{% block body %}
+<h1>PET PROFILE PAGE</h1>
+<p>Picture</p>
+{{ pet.pet_profile }}
+<p>name</p>
+{{ pet.pet_name }}
+<p>Detail</p>
+{{ pet.pet_type }}
+{% for species in pet.pet_species %}
+{{ pet.pet_species }}
+{% endfor %}
+{{ pet.pet_hair_color }}
+{{ pet.pet_eye_color }}
+<p>Birthday</p>
+{{ pet.pet_born_day }} {{ pet.pet_born_month }} {{ pet.pet_born_year }}
+{% endblock %}

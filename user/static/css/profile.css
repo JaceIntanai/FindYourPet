@@ -1,0 +1,79 @@
+#profile-wrapper{
+    font-family: 'Work sans', sans-serif;
+    margin:13% 30%;
+}
+#profile-pic{
+    position:absolute;
+    z-index: 3;
+    top: 8rem;
+    left: 45%;
+    width:150px;
+    height:150px;
+    object-fit:cover;
+    border-radius:120px;
+    transition: box-shadow 1s ease;
+}
+#profile-pic:hover{
+    box-shadow:0px 0px 80px rgba(255,255,200,0.8);
+    transition: 1s ease;
+}
+.mycard{
+    display: grid;
+    grid-template-columns: 40% 20% 40%;
+    background-color: rgba(255, 248, 220,1);
+    padding: 10px;
+    border-radius: 5px 5px 20px 20px;
+    box-shadow: 5px 15px 30px rgba(0,0,0,0.8);
+}
+.mycard h2{
+  margin:0px;
+}
+.mycard p{
+  margin: 5px 0px;
+}
+#one{
+  text-align:center;
+  grid-column:1;
+}
+#two{
+  text-align:center;
+  grid-column:3;
+}
+#mid{
+  padding-left:3%;
+  grid-column:2;
+}
+svg{
+  width:70px;
+  height:70px;
+  font-size:3em;
+  padding-left:18%;
+  transition: 1s;
+}
+svg:hover{
+  width:100px;
+  height:100px;
+  padding-left:10%;
+  filter: invert(67%) sepia(74%) saturate(1166%) hue-rotate(315deg) brightness(117%) contrast(101%) opacity(100%);
+  transition: 1s;
+  /*transition: filter 2s ease,width 1s,height 1s,padding-left 1s;*/
+}
+button{
+  background-color:transparent;
+  border:none;
+}
+.pet-form{
+  padding-top:20px;
+  grid-column:1/4;
+  display: grid;
+  grid-template-columns: 40% 20% 40%;
+}
+.pet-form h2{
+  font-size:1.4em;
+}
+.pet-form #one{
+  grid-column:1;
+}
+.pet-form #two{
+  grid-column:3;
+}

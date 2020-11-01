@@ -1,0 +1,24 @@
+{% load static %}
+<div class="overlay-navigation" style="z-index: 99;">
+  <nav role="navigation">
+    <ul>
+      <li class= "navbar navbar1"><a href="{% url 'index' %}" data-content="Go to HOME &#128054"><h2>Home</h2></a></li>
+      <li class= "navbar navbar2"><a href="#" data-content="Go to Forum &#128049"><h2>FORUM</h2></a></li>
+      <li class= "navbar navbar3"><a href="#" data-content="Pet Meee &#128038"><h2>PET</h2></a></li>
+      <li class= "navbar navbar4"><a href="{% url 'profile' %}" data-content="My Profile &#128048"><h2>PROFILE</h2></a></li>
+      <li class= "navbar navbar5"><a href="{% url 'about' %}" data-content="About Me &#128057"><h2>ABOUT</h2></a></li>
+    </ul>
+  </nav>
+</div>
+<div>
+  <a class="logout" href={% url 'logout'%}><i class=" fas fa-sign-out-alt"></i></a>
+</div>
+<section class="home">
+  <div class="open-overlay">
+    <span class="bar-top" ></span>
+    <span class="bar-middle"></span>
+    <span class="bar-bottom"></span>
+  </div>
+</section>
+<script src="{% static 'js/nav-bar.js' %}"></script>
+

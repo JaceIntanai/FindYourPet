@@ -3,6 +3,56 @@ body {
   background-color: #fff
 }
 
+
+/* ==============================
+Chang's Edit for good
+================================== */
+.navbar h2{
+  font-family: 'Amiko', Sans-serif;
+  font-size:2rem;
+}
+.navbar1 h2{color:#c3fdfd;}
+.navbar2 h2{color:#fffb6d;}
+.navbar3 h2{color:#ff6f42;}
+.navbar4 h2{color:#ceffc5;}
+.navbar5 h2{color:#ff496b;}
+
+.navbar1{
+  background-size:cover;
+  background-image: url(https://i.imgur.com/8Whyxhl.jpg);
+}
+.navbar2{
+  background-size:cover;
+  background-image: url(https://i.imgur.com/NgMWAHJ.jpg);
+}
+.navbar3{
+  background-size:cover;
+  background-image: url(https://i.imgur.com/yYvziqA.jpg);
+}
+.navbar4{
+  background-size:cover;
+  background-image: url(https://i.imgur.com/jWOYqsl.jpg);
+}
+.navbar5{
+  background-size:cover;
+  background-image: url(https://i.imgur.com/tEklNNo.jpg);
+}
+.logout{
+  position:absolute;
+  right: 2rem;
+  top: 0.7rem;
+  z-index: 100;
+  color: rgba(255,255,255,0.5);
+  font-size:3em;
+  display: block;
+  cursor: pointer;
+  transition: 0.5s;
+}
+.logout:hover{
+  color: rgba(255,255,255,1);
+  font-size:3.5em;
+  transition: 0.5s;
+}
 /* ====================================
 Navigation
 ==================================== */
@@ -14,17 +64,18 @@ Navigation
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: hsla(0, 0%, 0%, 0.8);
+  background-color: rgba(0, 0, 0, 0.1);
   transform: translateY(-100%);
 }
 
 .overlay-slide-down {
-  transition: all .2s ease-in-out;
+  background-color: rgba(0, 0, 0, 0.8);
+  transition: all .5s ease-in-out , background-color 0.3s;
   transform: translateY(0)
 }
 
 .overlay-slide-up {
-  transition: all .4s ease-in-out;
+  transition: all .8s ease-in-out;
   transform: translateY(-100%)
 }
 
@@ -67,8 +118,8 @@ nav li a {
 nav li a:before {
   content: '';
   width: 70px;
-  height: 2px;
-  background-color: #fff;
+  height: 3px;
+  background-color:white;
   position: absolute;
   top: 50%;
   left: 0;
@@ -80,7 +131,7 @@ nav li a:before {
 
 nav li a:after {
   content: attr(data-content);
-  font-size: 0.7rem;
+  font-size: 1rem;
   transition: all .1s linear;
   opacity: 0;
   position: absolute;
@@ -91,9 +142,9 @@ nav li a:after {
   margin-left: auto;
   left: 0;
   right: 0;
-  bottom: -50px;
+  bottom: 55px;
   text-transform: none;
-  font-family: 'Open sans', serif;
+  font-family: 'Amiko', Sans-serif;
   font-weight: 300;
   font-style: italic;
   letter-spacing: 0;
@@ -109,7 +160,7 @@ nav li a:hover:after {
   opacity: 1;
 }
 
-nav li:nth-of-type(1){background-color: #33BAFF}
+nav li:nth-of-type(1){background-color:red;}
 nav li:nth-of-type(2){background-color: #EA495F}
 nav li:nth-of-type(3){background-color: #F4837D}
 nav li:nth-of-type(4){background-color: #FDCEA9}
@@ -162,12 +213,16 @@ Burger king
 
 .open-overlay {
   position: absolute;
-  right: 5rem;
-  top: 1rem;
+  left: 2rem;
+  top: 1.5rem;
   z-index: 100;
   width: 34px;
   display: block;
   cursor: pointer;
+  transition:1s;
+}
+.open-overlay:hover{
+  width: 45px;
 }
 
 .open-overlay span {

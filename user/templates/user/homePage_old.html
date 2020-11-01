@@ -1,0 +1,68 @@
+{% extends "user_layout/layout.html" %}
+{% block body %}
+<div class="overlay-navigation" style="z-index: 99;">
+  <nav role="navigation">
+    <ul>
+      <li style="background-position: 60% 70%;background-image: url(https://img5.goodfon.com/wallpaper/nbig/2/2a/4k-ultra-hd-background-intentional-blur-low-angle-photograph.jpg);background-repeat: no-repeat;"><a href="{% url 'index' %}" data-content="Go to HOME &#128054"><h2 style="color: cornsilk;font-family: 'Amiko', Sans-serif;">Home</h2></a></li>
+      <li style="background-position: 45% 40%;background-image: url(https://s2.best-wallpaper.net/wallpaper/1920x1200/1402/Cat-portrait-blur-background_1920x1200.jpg)"><a href="#" data-content="Go to Forum &#128049"><h2 style="color:tomato;font-family: 'Amiko', Sans-serif;">FORUM</h2></a></li>
+      <li style="background-position: 75% 45%;background-image: url(https://petkeen.com/wp-content/uploads/2020/06/Normal-Grey-Cockatiel.jpg);background-repeat: none; "><a href="#" data-content="Pet Meee &#128038"><h2 style="color:crimson;font-family: 'Amiko', Sans-serif;">PET</h2></a></li>
+      <li style="background-position: 45% 35%;background-image: url(https://i.imgur.com/dGW6uPg.jpg);background-repeat: no-repeat;"><a href="{% url 'profile' %}" data-content="My Profile &#128048"><h2 style="color:seagreen;font-family: 'Amiko', Sans-serif;">PROFILE</h2></a></li>
+      <li style="background-position: 18% 50%;background-image: url(https://i.imgur.com/13dAqxN.jpg);background-repeat: no-repeat;"><a href="{% url 'about' %}" data-content="About Me &#128057"><h2 style="color:#6b5c56;font-family: 'Amiko', Sans-serif;">ABOUT</h2></a></li>
+    </ul>
+  </nav>
+</div>
+
+<section class="home">
+  <div class="open-overlay">
+    <span class="bar-top" ></span>
+    <span class="bar-middle"></span>
+    <span class="bar-bottom"></span>
+  </div>
+</section>
+
+<div id="link" class="w3-card-4 w3-animate-opacity" style="opacity: 0.8;z-index: 80;position:fixed;left:450px;width:40%;border-radius: 0px 0px 20px 20px">
+    <header class="w3-container w3-red w3-center" style="border-radius: 0px 0px 20px 20px;">
+        <h1 style="color:white;font-family: 'Acme', sans-serif;"><i class="fas fa-home"></i> HOME</h1>
+    </header>
+</div>
+
+<!--<h1>FIND YOUR PET</h1>-->
+<!--<p>Welcome To Homepage FindYourPet</p>-->
+<script>
+  $('.open-overlay').click(function() {
+  var overlay_navigation = $('.overlay-navigation'),
+    nav_item_1 = $('nav li:nth-of-type(1)'),
+    nav_item_2 = $('nav li:nth-of-type(2)'),
+    nav_item_3 = $('nav li:nth-of-type(3)'),
+    nav_item_4 = $('nav li:nth-of-type(4)'),
+    nav_item_5 = $('nav li:nth-of-type(5)'),
+    top_bar = $('.bar-top'),
+    middle_bar = $('.bar-middle'),
+    bottom_bar = $('.bar-bottom');
+
+  overlay_navigation.toggleClass('overlay-active');
+  if (overlay_navigation.hasClass('overlay-active')) {
+
+    top_bar.removeClass('animate-out-top-bar').addClass('animate-top-bar');
+    middle_bar.removeClass('animate-out-middle-bar').addClass('animate-middle-bar');
+    bottom_bar.removeClass('animate-out-bottom-bar').addClass('animate-bottom-bar');
+    overlay_navigation.removeClass('overlay-slide-up').addClass('overlay-slide-down')
+    nav_item_1.removeClass('slide-in-nav-item-reverse').addClass('slide-in-nav-item');
+    nav_item_2.removeClass('slide-in-nav-item-delay-1-reverse').addClass('slide-in-nav-item-delay-1');
+    nav_item_3.removeClass('slide-in-nav-item-delay-2-reverse').addClass('slide-in-nav-item-delay-2');
+    nav_item_4.removeClass('slide-in-nav-item-delay-3-reverse').addClass('slide-in-nav-item-delay-3');
+    nav_item_5.removeClass('slide-in-nav-item-delay-4-reverse').addClass('slide-in-nav-item-delay-4');
+  } else {
+    top_bar.removeClass('animate-top-bar').addClass('animate-out-top-bar');
+    middle_bar.removeClass('animate-middle-bar').addClass('animate-out-middle-bar');
+    bottom_bar.removeClass('animate-bottom-bar').addClass('animate-out-bottom-bar');
+    overlay_navigation.removeClass('overlay-slide-down').addClass('overlay-slide-up')
+    nav_item_1.removeClass('slide-in-nav-item').addClass('slide-in-nav-item-reverse');
+    nav_item_2.removeClass('slide-in-nav-item-delay-1').addClass('slide-in-nav-item-delay-1-reverse');
+    nav_item_3.removeClass('slide-in-nav-item-delay-2').addClass('slide-in-nav-item-delay-2-reverse');
+    nav_item_4.removeClass('slide-in-nav-item-delay-3').addClass('slide-in-nav-item-delay-3-reverse');
+    nav_item_5.removeClass('slide-in-nav-item-delay-4').addClass('slide-in-nav-item-delay-4-reverse');
+  }
+})
+</script>
+{% endblock %}

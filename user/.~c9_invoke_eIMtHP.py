@@ -30,10 +30,6 @@ def countUser() :
     count = Owner.objects.all().count()
     return str(count + 1)
 
-def countPet() :
-    count = Pet.objects.all().count()
-    return str(count + 1)
-
 def about(request) :
     return render(request, "user/about.html")
 
@@ -60,17 +56,13 @@ def login_view(request):
             if user is not None:
                 login(request, user)
                 if request.user.is_staff:
-                    print("admin")
                     return HttpResponseRedirect(reverse("admin"))
                 else:
-                    print("user")
                     return HttpResponseRedirect(reverse("index"))
             else:
-                print("invalid")
                 return render(request, "user/loginPage.html", {
                     "message" : "Invalid credentials"
                 })
-        print("out of post")
         return render(request, "user/loginPage.html")
 
 def logout_view(request):
@@ -88,21 +80,24 @@ def googledrive(file,select):
     mime_type = 'image/jpeg'
     if select == "users":
         path = default_storage.save(
-        '/home/ubuntu/FindYourPet/user/storage/users/{}'.format(file),
+        '{}'.format(file),
         ContentFile(file.read()))
         file_medate = {
             'name': file.name,
             'parents':  [folder_users]
         }
+        print("users")
     else :
         path = default_storage.save(
-        '/home/ubuntu/FindYourPet/user/storage/pets/{}'.format(file),
+        '{}'.format(file),
         ContentFile(file.read()))
         file_medate = {
             'name': file,
             'parents':  [folder_pets]
         }
+        print("pets")
     media = MediaFileUpload(path, mimetype = mime_type)
+    print(file_medate, media)
     results = service.files().create(
                 body=file_medate,
                 media_body=media,
@@ -164,11 +159,9 @@ def profile(request):
     users = Owner.objects.get(owner_username = request.user.username)
     type_selected = ["dog", "cat"]
     # print(users.owner_name)
-    img = f'https://drive.google.com/uc?id={users.owner_profile}'
     return render(request, "user/profilePage.html",{
         "user": users,
-        "type_select" : type_selected,
-        "profile": img
+        "type_select" : type_selected
     })
 
 def add_pet(request):
@@ -183,51 +176,5 @@ def add_pet(request):
     # print(species_select)
     return render(request, "user/petRegister.html", {
         "species": species_select,
-        "pet_type": type_pet
+        "type": type_pet
     })
-
-def petregister(request):
-    if request.method == "POST":
-        name = request.POST["pet_name"]
-        species = request.POST["species_select"]
-        hair = request.POST["pet_hair_color"]
-        eye = request.POST["pet_eye_color"]
-        date = request.POST["birthday"]
-        img = request.FILES["pet_profile"] if "pet_profile" in request.FILES else False
-        print(species, date)
-        # users = Owner.objects.filter(owner_username = username)
-        # if password != confirm_password :
-        #     return render(request, "user/ownRegister.html",{
-        #         "message" : "Not same password!"
-        #     })
-        # if img == False :
-        #     return render(request, "user/ownRegister.html",{
-        #         "message" : "Choose your picture!"
-        #     })
-        # if not users and img != False:
-        #     items = googledrive(img,"pets")
-        #     User.objects.create_user(
-        #         username = username,
-        #         password = password,
-        #         email = email,
-        #         first_name = name,
-        #         last_name = surname
-        #     )
-        #     Owner.objects.create(
-        #         owner_profile = items,
-        #         owner_id = countUser(),
-        #         owner_username = username,
-        #         owner_name = name,
-        #         owner_surname = surname,
-        #         owner_phone = phone,
-        #         owner_email = email
-        #     )
-    #         return render(request, "user/loginPage.html",{
-    #             "message" : "Register Success!"
-    #         })
-    #     else :
-    #         return render(request, "user/ownRegister.html",{
-    #             "message" : "Username already used!"
-    #         })
-
-    # return render(request, "user/ownRegister.html")

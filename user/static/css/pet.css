@@ -1,0 +1,93 @@
+
+svg{
+  width:50px;
+  height:50px;
+  padding-right:5px;
+  filter: invert(98%) sepia(0%) saturate(0%) hue-rotate(338deg) brightness(150%) contrast(150%);
+}
+#pet_form{
+    font-family: 'Work sans', sans-serif;
+    color:chocolate;
+    margin:8% 10%;
+    background-color: rgba(255, 248, 220,1);
+    width: max-content;
+    padding: 30px;
+    border-radius: 5px 5px 20px 20px;
+    box-shadow: 5px 15px 30px rgba(0,0,0,0.3);
+    transition:1s;
+}
+#pet_form:hover{
+    box-shadow: 5px 15px 30px rgba(0,0,0,0.8);
+    transition:1s;
+}
+#upload-wrapper{
+    width:100px;
+    height:100px;
+}
+#upload-preview{
+    width:100px;
+    height:100px;
+    background-image:url(https://cdn3.iconfinder.com/data/icons/pet-18/128/__dog_footprint_paw_pet_animal-512.png);
+    background-color:white;
+    background-size:cover;
+    background-position:center;
+    border-radius:100px;
+    margin-bottom:10px;
+    transition:1s;
+}
+#upload-preview:hover{
+    box-shadow: 5px 5px 20px rgba(0,0,0,0.7);
+    transition:1s;
+}
+#upload-wrapper i{
+    font-size:2.5em;
+    color:black;
+    position:relative;
+    top:-120px;
+    left:80px;
+    transition: 1s;
+    z-index:2;
+}
+#upload-wrapper i:hover{
+    font-size:2.8em;
+    color:red;
+    left:80px;
+    transition: 1s;
+}
+#pet_profile{
+    display:none;
+}
+.myselect{
+    width: 80px;
+    padding:10px;
+    margin-right:10px;
+    border:none;
+    border-bottom:1px solid rgba(0,0,0,0.7);
+
+}
+#pet_form label{
+    margin-right:70px;
+}
+#pet_form input{
+    padding:10px;
+    border:1px solid rgba(0,0,0,0.5);
+    border-radius:10px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+#pet_form button{
+  cursor: pointer;
+  color: #fff;
+  font-size: 16px;
+  text-transform: uppercase;
+  border: 0;
+  padding: 10px;
+  margin-left: 15px;
+  border-radius: 5px;
+  background-color: #f45b69;
+  transition:0.5s;
+}
+#pet_form button:hover{
+  background-color: #f24353;
+  transition:0.5s;
+}
