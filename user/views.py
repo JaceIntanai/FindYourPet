@@ -2,7 +2,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.template.context_processors import csrf
 from django.contrib.auth.models import User
+from .models import Owner
 import time
 
 from django.core.files.storage import default_storage
@@ -26,6 +28,12 @@ service = Create_Service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPE)
 from .models import Owner, Pet, Species
 
 # Create your views here.
+def owner(request):
+	args = {}
+	args.update(csrf(request))
+	args['owner'] = Owner.objects.all()
+	return render('index.html', args)
+
 def countUser() :
     count = Owner.objects.all().count()
     return str(count + 1)

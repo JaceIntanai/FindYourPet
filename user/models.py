@@ -11,7 +11,7 @@ class Species(models.Model) :
 
 
 class Pet(models.Model) :
-    pet_id = models.CharField(max_length=10)
+    pet_id = models.CharField(max_length=10, default='0000000')
     pet_name = models.CharField(max_length=64)
     pet_type = models.CharField(max_length=20)
     pet_species = models.ManyToManyField(Species, blank=True, related_name = "pets")
@@ -26,7 +26,7 @@ class Pet(models.Model) :
         return f"{self.pet_id} {self.pet_name} {self.pet_type} {self.pet_hair_color} {self.pet_eye_color} {self.pet_born_day} {self.pet_born_month} {self.pet_born_year} {self.pet_profile}"
 
 class Owner(models.Model) :
-    owner_id = models.CharField(max_length=10)
+    owner_id = models.CharField(max_length=10, default='0000000')
     owner_username = models.CharField(max_length=10)
     owner_name = models.CharField(max_length=64)
     owner_surname = models.CharField(max_length=64)
@@ -42,9 +42,14 @@ class Comment(models.Model) :
     comment_id = models.CharField(max_length=10)
     comment_detail = models.CharField(max_length=300)
 
+    def __str__(self):
+        return f"{self.comment_id} {self.comment_detail}"
+
 class Forum(models.Model) :
     forum_id = models.CharField(max_length=10)
     forum_topic = models.CharField(max_length=100)
     forum_user = models.CharField(max_length=64)
     forum_comment = models.ManyToManyField(Comment, blank=True, related_name="comments")
 
+    def __str__(self):
+        return f"{self.forum_id} {self.forum_topic} {self.forum_user}"

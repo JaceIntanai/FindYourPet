@@ -90,6 +90,7 @@ class FindYourPet_test_case(TestCase):
         self.assertEqual(response.status_code,302)
         self.assertEqual(self.redirect(response), '/login')
 
+    # Model test
     def create_owner(self, oID="test_oID", username="test_username", name="test_name", surname="test_surname", phone="test_surname", email="test_email", profile="test_profile"):
         return Owner.objects.create(owner_id=oID
                                         , owner_username=username
@@ -129,3 +130,40 @@ class FindYourPet_test_case(TestCase):
         self.assertTrue(isinstance(w, Pet))
         test_w = f"{w.pet_id} {w.pet_name} {w.pet_type} {w.pet_hair_color} {w.pet_eye_color} {w.pet_born_day} {w.pet_born_month} {w.pet_born_year} {w.pet_profile}"
         self.assertEqual(w.__str__(), test_w)
+
+    def create_species(self, species_type="dog", species_name="shiba"):
+        return Species.objects.create(species_type=species_type, species_name=species_name)
+
+    def test_species_creation(self):
+        w = self.create_species()
+        self.assertTrue(isinstance(w, Species))
+        test_w = f"{w.species_type} --> {w.species_name}"
+        self.assertEqual(w.__str__(), test_w)
+
+    def create_comment(self, comment_id="56789", comment_detail="Wow, so cute"):
+        return Comment.objects.create(comment_id=comment_id, comment_detail=comment_detail)
+
+    def test_create_comment(self):
+        w = self.create_comment()
+        self.assertTrue(isinstance(w, Comment))
+        test_w = f"{w.comment_id} {w.comment_detail}"
+        self.assertEqual(w.__str__(), test_w)
+
+    def create_forum(self, forum_id="852147", forum_topic="My pet is missing", forum_user="Reder"):
+        return Forum.objects.create(forum_id=forum_id, forum_topic=forum_topic, forum_user=forum_user)
+
+    def test_create_forum(self):
+        w = self.create_forum()
+        self.assertTrue(isinstance(w, Forum))
+        test_w = f"{w.forum_id} {w.forum_topic} {w.forum_user}"
+        self.assertEqual(w.__str__(), test_w)
+
+    # Views test
+    # def test_owner_list_view(self):
+    #     w = self.create_owner()
+    #     url = reverse("views.owner")
+    #     resp = self.client.get(url)
+    #     test_w = f"{w.owner_id} {w.owner_username} {w.owner_name} {w.owner_surname} {w.owner_phone} {w.owner_profile}"
+
+    #     self.assertEqual(resp.status_code, 200)
+    #     self.assertIn(test_w, resp.content)
