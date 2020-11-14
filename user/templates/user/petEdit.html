@@ -1,0 +1,37 @@
+{% extends "user_layout/layout_Main.html" %}
+{% load static %}
+{% block body %}
+<link rel="stylesheet" type="text/css" href={% static '/css/pet.css'%}>
+<div class="w3-card-4">
+    <header id="top-banner" class="w3-container w3-red w3-center">
+        <h1 style="color:white;font-family: 'Acme', sans-serif;"><i class="fas fa-home"></i> EDIT PET</h1>
+    </header>
+</div>
+<!-- chang is here -->
+<form id="pet_form" action="{% url 'peteditchange' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <h1>Pet Edit</h1>
+    <div id="upload-wrapper">
+        <div id="upload-preview"></div>
+        <label for="pet_profile" title="upload your pet pic"><i class="fas fa-plus-circle" id="upload-icon"></i></label>
+        <input type="file" name="pet_profile" id="pet_profile" onchange="previewImageFixed(event)" accept=".jpeg , .jpg" value="{{ pet_profile }}">
+    </div>
+    <label for="pet_name">Pet Name</label><br>
+    <input type="text" placeholder="Your Pet Name" name="pet_name" value="{{ pet.pet_name }}">
+    <select class="myselect w3-select" name="species_select" id="species_select" multiple="multiple" size="6">
+        {% for specie in species %}
+            <option value="{{ specie.species_name }}">{{ specie.species_name }}</option>
+        {% endfor %}
+    </select><br>
+    <label for="pet_hair_color">Pet Hair/Fur Color</label>
+    <label for="pet_eye_color">Pet Eyes Color</label><br>
+    <input type="text" placeholder="Your pet hair color" name="pet_hair_color" value="{{ pet.pet_hair_color }}">
+    <input type="text" placeholder="Your pet eye color" name="pet_eye_color" value="{{ pet.pet_eye_color }}"><br>
+    <input type="date" id="birth" name="birthday" value="{{pet.pet_born_year}}-{{pet.pet_born_month}}-{{pet.pet_born_day}}">
+    <button name="pet_id" type="submit" value="{{ pet.pet_id }}">Edit</button>
+    {% if message %}
+    <h3>{{message}}</h3>
+    {% endif %}
+</form>
+<script src={% static 'js/image-preview.js' %}></script>
+{% endblock %}

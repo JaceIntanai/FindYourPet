@@ -7,7 +7,7 @@
         <h1 style="color:white;font-family: 'Acme', sans-serif;">{% include 'svg/addpet.svg' %} Pet Profiling</h1>
     </header>
 </div>
-<form id="pet_form" action="{ url 'petregister' }" method="POST" enctype="multipart/form-data">
+<form id="pet_form" action="{% url 'petregister' %}" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <h1>Pet Register</h1>
     <div id="upload-wrapper">
@@ -17,7 +17,7 @@
     </div>
     <label for="pet_name">Pet Name</label><br>
     <input type="text" placeholder="Your Pet Name" name="pet_name">
-    <select class="myselect w3-select" name="species_select" id="species_select" multiple="multiple">
+    <select class="myselect w3-select" name="species_select" id="species_select" multiple="multiple" size="6">
         {% for specie in species %}
             <option value="{{ specie }}">{{ specie }}</option>
         {% endfor %}
@@ -27,7 +27,8 @@
     <input type="text" placeholder="Your pet hair color" name="pet_hair_color">
     <input type="text" placeholder="Your pet eye color" name="pet_eye_color"><br>
     <input type="date" id="birth" name="birthday" value="2020-10-30">
-    <button type="submit" value="{{ pet_type }}">Register</button>
+    <input type="hidden" id="userId" name="userId" value="{{ ownerId }}">
+    <button name="type_pet" type="submit" value="{{ pet_type }}">Register</button>
     {% if message %}
     <h3>{{message}}</h3>
     {% endif %}

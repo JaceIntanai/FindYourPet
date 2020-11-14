@@ -1,0 +1,35 @@
+{% extends "user_layout/layout_Main.html" %}
+{% load static %}
+{% block body %}
+<link rel="stylesheet" type="text/css" href={% static '/css/homepage.css'%}>
+<div class="w3-card-4">
+    <header id="top-banner" class="w3-container w3-red w3-center">
+        <h1 style="color:white;font-family: 'Acme', sans-serif;"><i class="fas fa-home"></i>PET PAGE</h1>
+    </header>
+</div>
+<div>
+    {% for pet, species, profile, owner_name in pets %}
+    {% if pet.pet_type == 'dog' %}
+    <div>
+        <p>{{ pet.pet_type }}</p>
+        <img id="pet-pic" class="itemall" src="{{ profile }}" width="50%" >
+        <h2>{{ pet.pet_name }}</h2>
+        {% for specie in species %}
+        <p>{{ specie }}</p>
+        {% endfor %}
+        <p>{{ owner_name }}</p>
+    </div>
+    {% else %}
+    <div>
+        <img id="pet-pic" class="itemall" src="{{ profile }}" width="50%" >
+        <h2>{{ pet.pet_name }}</h2>
+        {% for specie in species %}
+        <p>{{ specie }}</p>
+        {% endfor %}
+        <p>{{ owner_name }}</p>
+    </div>
+    {% endif %}
+    {% endfor %}
+</div>
+<script src="{% static 'js/slideshow_homepage.js' %}"></script>
+{% endblock %}

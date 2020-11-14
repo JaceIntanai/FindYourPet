@@ -10,5 +10,9 @@ urlpatterns = [
     path('admin', views.admin, name='admin'),
     path('profile', views.profile, name='profile'),
     path('addpet', views.add_pet, name='addpet'),
-    path('petregister', views.petregister, name='petregister')
+    path('petregister', views.petregister, name='petregister'),
+    path('petdetail', views.petdetail, name='petdetail'),
+    path('petedit', views.petedit, name='petedit'),
+    path('peteditchange', views.peteditchange, name='peteditchange'),
+    path('pet', views.pet, name="pet")
 ]

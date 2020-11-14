@@ -106,7 +106,8 @@ class FindYourPet_test_case(TestCase):
         test_w = f"{w.owner_id} {w.owner_username} {w.owner_name} {w.owner_surname} {w.owner_phone} {w.owner_profile}"
         self.assertEqual(w.__str__(), test_w)
 
-    def create_pet(self,pet_id="123457"
+    def create_pet(self, owner_id="552548"
+                    ,pet_id="123457"
                     , pet_name="kook"
                     , pet_type="cat"
                     , pet_hair_color="black"
@@ -115,7 +116,8 @@ class FindYourPet_test_case(TestCase):
                     , pet_born_month="9"
                     , pet_born_year="2015"
                     , pet_profile="../FRONG.jpg"):
-        return Pet.objects.create(pet_id=pet_id
+        return Pet.objects.create(owner_id=owner_id
+                                ,pet_id=pet_id
                                 , pet_name=pet_name
                                 , pet_type=pet_type
                                 , pet_hair_color=pet_hair_color
@@ -128,7 +130,7 @@ class FindYourPet_test_case(TestCase):
     def test_pet_creation(self):
         w = self.create_pet()
         self.assertTrue(isinstance(w, Pet))
-        test_w = f"{w.pet_id} {w.pet_name} {w.pet_type} {w.pet_hair_color} {w.pet_eye_color} {w.pet_born_day} {w.pet_born_month} {w.pet_born_year} {w.pet_profile}"
+        test_w = f"{w.owner_id} <= {w.pet_id} {w.pet_name} {w.pet_type} {w.pet_hair_color} {w.pet_eye_color} {w.pet_born_day} {w.pet_born_month} {w.pet_born_year} {w.pet_profile}"
         self.assertEqual(w.__str__(), test_w)
 
     def create_species(self, species_type="dog", species_name="shiba"):

@@ -91,3 +91,6 @@ svg{
   background-color: #f24353;
   transition:0.5s;
 }
+#pet_frobotton#watch{
+    background-color:red;
+}

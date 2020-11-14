@@ -9,7 +9,8 @@ html{
 body{
     background-image: url("https://wallpaperaccess.com/full/1080447.jpg");
     background-size: cover;
-    background-repeat:none;
+    background-repeat:no-repeat;
+    background-attachment: fixed;
     color : DarkSlateGrey;
 }
 #bg{

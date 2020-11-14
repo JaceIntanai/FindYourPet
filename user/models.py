@@ -11,6 +11,7 @@ class Species(models.Model) :
 
 
 class Pet(models.Model) :
+    owner_id = models.CharField(max_length=10, default='0000000')
     pet_id = models.CharField(max_length=10, default='0000000')
     pet_name = models.CharField(max_length=64)
     pet_type = models.CharField(max_length=20)
@@ -23,7 +24,7 @@ class Pet(models.Model) :
     pet_profile = models.CharField(max_length=300)
 
     def __str__(self):
-        return f"{self.pet_id} {self.pet_name} {self.pet_type} {self.pet_hair_color} {self.pet_eye_color} {self.pet_born_day} {self.pet_born_month} {self.pet_born_year} {self.pet_profile}"
+        return f"{self.owner_id} <= {self.pet_id} {self.pet_name} {self.pet_type} {self.pet_hair_color} {self.pet_eye_color} {self.pet_born_day} {self.pet_born_month} {self.pet_born_year} {self.pet_profile}"
 
 class Owner(models.Model) :
     owner_id = models.CharField(max_length=10, default='0000000')

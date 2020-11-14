@@ -30,6 +30,7 @@
                 {% csrf_token %}
             <div id="one"><h2>Add Dog</h2></div>
             <div id="two"><h2>Add Cat</h2></div>
+            <input type="hidden" id="user" name="user" value="{{ user.owner_id }}">
             <div id="one"><button name="type_pet" type="submit" value="dog">{% include 'svg/adddog.svg' %}</button></div>
             <div id="two"><button name="type_pet" type="submit" value="cat">{% include 'svg/addcat.svg' %}</button></div>
             <!-- <button name="type_pet" type="submit" value="dog">{% include 'svg/adddog.svg' %}</button>
@@ -39,4 +40,35 @@
         <!--<div id="mid"><a href={% url 'addpet' %} title="Add Your Cat Here">{% include 'svg/addpet.svg' %}</a></div>-->
     </div>
 </div>
+<section id="pet-collection">
+    {% for pet, species, img in pets %}
+    <div class="mycard pet-item w3-card-4">
+        <p class="petname">{{ pet.pet_name }}</p>
+        <img id="pet-pic" class="itemall" src="{{ img }}" width="50%" >
+        <!-- <p>{{ pet.pet_type }}</p> -->
+        <h2 class="item1">BirthDay</h2>
+        <h2 class="item3">Species</h2>
+        <p class="item1">{{ pet.pet_born_day }} - {{ pet.pet_born_month }} - {{ pet.pet_born_year }}</p>
+        <select class="item3">
+            {% for specie in species %}
+            <option>{{ specie }}</option>
+            {% endfor %}
+        </select>
+        <h2 class="item1">Hair Color</h2>
+        <h2 class="item3">Eye Color</h2>
+        <p class="item1">{{ pet.pet_hair_color }}</p>
+        <p class="item3">{{ pet.pet_eye_color }}</p>
+        <form class="item3" action="{% url 'petedit' %}" method="POST" class="pet-form">
+            {% csrf_token %}
+            <button name="petedit" type="submit" value="{{ pet.pet_id }}" title="Click here to edit {{ pet.pet_name }}"><i class="fas fa-edit"></i></button>
+        </form>
+        <!--This should be in the All-pet page -->
+        <form  class="item3" action="{% url 'petdetail' %}" method="POST" class="pet-form">
+            {% csrf_token %}
+            <input type="hidden" id="user" name="user" value="{{ user.owner_username }}">
+            <button id="watch" name="petdetail" type="submit" value="{{ pet.pet_id }}" style="background-color:red; color:white;" title="WATCH"><i class="fas fa-eye"></i></button>
+        </form>
+    </div>
+    {% endfor %}
+</section>
 {% endblock %}

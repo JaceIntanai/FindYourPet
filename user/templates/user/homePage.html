@@ -1,9 +1,34 @@
 {% extends "user_layout/layout_Main.html" %}
+{% load static %}
 {% block body %}
+<link rel="stylesheet" type="text/css" href={% static '/css/homepage.css'%}>
 <div class="w3-card-4">
     <header id="top-banner" class="w3-container w3-red w3-center">
         <h1 style="color:white;font-family: 'Acme', sans-serif;"><i class="fas fa-home"></i> HOME</h1>
     </header>
 </div>
-<!-- chang is here -->
+<section id="intro1">
+  <div class="desp">
+    <h1>Can't find your furry buddy ?</h1>
+    <p> Our Website can help you with that ! we provide service for helping you search for your lovely pets.</p>
+    <p class="quote"><q>Find your pet is a good place to start looking for my dog</q><br>-jAME98</p>
+    <p class="quote"><q>My Caroline was gone for a week and then i found her through the community in Find Your Pet</q><br>-MaryLVCaro </p>
+  </div>
+  <div class="main-slide">
+    <div class="w3-content w3-display-container" style="text-align:center;">
+      <img src="https://www.aspca.org/sites/default/files/how-you-can-help_adoptions-tips_main-image-dog.jpg" class="myslides slide">
+      <img src="https://www.animalcommunicating.com/wp-content/uploads/2018/03/lost.jpg" class="myslides slide">
+      <img src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/beautiful-young-ginger-red-tabby-cat-looking-at-royalty-free-image-1588860530.jpg" class="myslides slide">
+  <div class="w3-center w3-container w3-section w3-large w3-text-white w3-display-bottommiddle" style="width:80%">
+      <div class="w3-left myclick" onclick="plusDivs(-1)">&#10094;</div>
+      <div class="w3-right myclick" onclick="plusDivs(1)">&#10095;</div>
+      <span class="w3-badge dot w3-transparent" onclick="currentDiv(1)"></span>
+      <span class="w3-badge dot w3-transparent" onclick="currentDiv(2)"></span>
+      <span class="w3-badge dot w3-transparent" onclick="currentDiv(3)"></span>
+    </div>
+    </div>
+  </div>
+</section>
+
+<script src="{% static 'js/slideshow_homepage.js' %}"></script>
 {% endblock %}
