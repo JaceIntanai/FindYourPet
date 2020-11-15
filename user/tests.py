@@ -3,6 +3,8 @@ from .models import Species, Pet, Owner, Comment, Forum
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.urls import reverse
+from PIL import Image
+import tempfile
 
 # Create your tests here.
 class FindYourPet_test_case(TestCase):
@@ -92,43 +94,72 @@ class FindYourPet_test_case(TestCase):
         response = self.client.post('/logout')
         self.assertEqual(response.status_code, 302)
         self.assertEqual(self.redirect(response), "/login")
-    # Test register
-    def test_register(self):
+    # Test owner register
+    def test_owner_register(self):
+        # register not upload image
         response = self.client.post('/ownregister',{'username':'6010610003',
                                                     'name':'student',
                                                     'surname':'student',
                                                     'password':'',
                                                     'confirm_password':'',
                                                     'email':'dasda@gmail.com',
-                                                    'phone':'0123456','profile':''})
+                                                    'phone':'0123456',
+                                                    'profile':''})
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response , 'user/ownRegister.html')
         self.assertEqual(response.context["message"],"Choose your picture!")
 
-    def test_register_1(self):
+    def test_owner_register_1(self):
+        # register password not the same as confirm password
         response = self.client.post('/ownregister',{'username':'6010610003',
                                                     'name':'student',
                                                     'surname':'student',
                                                     'password':'1',
                                                     'confirm_password':'',
                                                     'email':'dasda@gmail.com',
-                                                    'phone':'0123456','profile':''})
+                                                    'phone':'0123456',
+                                                    'profile':''})
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response , 'user/ownRegister.html')
         self.assertEqual(response.context["message"],"Not same password!")
 
-    def test_register_2(self):
-        client = Client()
-        response = self.client.post('/ownregister',{'username':'Reder',
-                                                    'name':'Reder',
-                                                    'surname':'student',
-                                                    'password':'',
-                                                    'confirm_password':'',
-                                                    'email':'dasda@gmail.com',
-                                                    'phone':'0123456','profile':''})
-        self.assertEqual(response.status_code, 200)
+
+    def test_owner_register_2(self):
+        # user name was used
+        image = Image.new('RGB', (100, 100))
+        tmp_file = tempfile.NamedTemporaryFile(suffix='.jpg')
+        image.save(tmp_file)
+        with open(tmp_file.name, 'rb') as data:
+            response = self.client.post('/ownregister',{'username':'Reder',
+                                                        'name':'Reder',
+                                                        'surname':'student',
+                                                        'password':'',
+                                                        'confirm_password':'',
+                                                        'email':'dasda@gmail.com',
+                                                        'phone':'0123456',
+                                                        'profile': data})
+            self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response , 'user/ownRegister.html')
         self.assertEqual(response.context["message"],"Username already used!")
+
+    # Test pet register
+    def test_pet_register(self):
+        # pet registeration with no imgae upload
+        image = Image.new('RGB', (100, 100))
+        tmp_file = tempfile.NamedTemporaryFile(suffix='.jpg')
+        image.save(tmp_file)
+        with open(tmp_file.name, 'rb') as data:
+            response = self.client.post('/petregister',{'pet_name':'coco',
+                                                        'species_select':'golden',
+                                                        'pet_hair_color':'brown',
+                                                        'pet_eye_color':'blue',
+                                                        'birthday':'dasda@gmail.com',
+                                                        'pet_profile': '',
+                                                        'type_pet':'dog',
+                                                        'userId':'123456'})
+            self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response , 'user/petRegister.html')
+        self.assertEqual(response.context["message"],"Picture Failed!")
 
     # Model test
     @classmethod
