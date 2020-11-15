@@ -160,9 +160,7 @@ def ownregister(request):
                     owner_phone = phone,
                     owner_email = email
                 )
-                return render(request, "user/loginPage.html",{
-                    "message" : "Register Success!"
-                })
+                return HttpResponseRedirect(reverse("login"))
             else :
                 return render(request, "user/ownRegister.html",{
                     "message" : "Username already used!"
@@ -343,14 +341,78 @@ def pet(request):
     owner_name = []
     for pet in pets:
         # print(pet.owner_id)
-        owner = Owner.objects.get(owner_id = pet.owner_id)
-        owner_name.append(owner.owner_name + " " + owner.owner_surname)
-        pet_profile = f'https://drive.google.com/uc?id={pet.pet_profile}'
-        profile_pets.append(pet_profile)
-        pet_spec = []
-        for specie in pet.pet_species.all():
-            pet_spec.append(specie.species_name)
-        species_pets.append(pet_spec)
+        if pet.owner_id != "0":
+            owner = Owner.objects.get(owner_id = pet.owner_id)
+            owner_name.append(owner.owner_name + " " + owner.owner_surname)
+            pet_profile = f'https://drive.google.com/uc?id={pet.pet_profile}'
+            profile_pets.append(pet_profile)
+            pet_spec = []
+            for specie in pet.pet_species.all():
+                pet_spec.append(specie.species_name)
+            species_pets.append(pet_spec)
     return render(request, "user/petPage.html",{
         "pets" : zip(pets,species_pets,profile_pets,owner_name)
     })
+
+def search(request):
+    if request.method == "POST" :
+        search_input = request.POST["search_input"]
+    pet_collect = []
+    pet_id = Pet.objects.filter(pet_id__contains=search_input)
+    pet_collect.extend(pet_id)
+    pet_name = Pet.objects.filter(pet_name__contains=search_input)
+    pet_collect.extend(pet_name)
+    pet_type = Pet.objects.filter(pet_type__contains=search_input)
+    pet_collect.extend(pet_type)
+    pets_all = Pet.objects.all()
+    pet_species = []
+    for pet in pets_all:
+        for specie in pet.pet_species.all():
+            if search_input in specie.species_name:
+                pet_species.append(pet)
+    pet_collect.extend(pet_species)
+
+    pets = list(set(pet_collect))
+    species_pets = []
+    profile_pets = []
+    owner_name = []
+    for pet in pets:
+        # print(pet.owner_id)
+        if pet.owner_id != "0":
+            owner = Owner.objects.get(owner_id = pet.owner_id)
+            owner_name.append(owner.owner_name + " " + owner.owner_surname)
+            pet_profile = f'https://drive.google.com/uc?id={pet.pet_profile}'
+            profile_pets.append(pet_profile)
+            pet_spec = []
+            for specie in pet.pet_species.all():
+                pet_spec.append(specie.species_name)
+            species_pets.append(pet_spec)
+    return render(request, "user/petPage.html",{
+        "pets" : zip(pets,species_pets,profile_pets,owner_name)
+    })
+
+def delpet(request):
+    if request.method == "POST" :
+        pet_id = request.POST["petdelete"]
+        owner = request.POST["user"]
+    owner_pet = Owner.objects.get(owner_username = owner)
+    pet = Pet.objects.filter(pet_id = pet_id)
+    pet_s = Pet.objects.get(pet_id = pet_id)
+    owner_pet.owner_pet.remove(pet_s)
+    pet.update(
+        owner_id = "0",
+        pet_name = "0",
+        pet_type = "0",
+        pet_hair_color = "0",
+        pet_eye_color = "0",
+        pet_born_day = "0",
+        pet_born_month = "0",
+        pet_born_year = "0",
+        pet_profile = "0"
+    )
+
+    for specie in pet_s.pet_species.all():
+        pet_s.pet_species.remove(specie)
+
+
+    return HttpResponseRedirect(reverse("profile"))

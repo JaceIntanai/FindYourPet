@@ -1,35 +1,49 @@
 {% extends "user_layout/layout_Main.html" %}
 {% load static %}
 {% block body %}
-<link rel="stylesheet" type="text/css" href={% static '/css/homepage.css'%}>
+<link rel="stylesheet" type="text/css" href={% static '/css/pet-collection.css'%}>
 <div class="w3-card-4">
     <header id="top-banner" class="w3-container w3-red w3-center">
-        <h1 style="color:white;font-family: 'Acme', sans-serif;"><i class="fas fa-home"></i>PET PAGE</h1>
+        <h1 style="color:white;font-family: 'Acme', sans-serif;"><i class="fas fa-paw"></i> Pet Collection</h1>
     </header>
 </div>
-<div>
-    {% for pet, species, profile, owner_name in pets %}
-    {% if pet.pet_type == 'dog' %}
-    <div>
-        <p>{{ pet.pet_type }}</p>
-        <img id="pet-pic" class="itemall" src="{{ profile }}" width="50%" >
-        <h2>{{ pet.pet_name }}</h2>
-        {% for specie in species %}
-        <p>{{ specie }}</p>
-        {% endfor %}
-        <p>{{ owner_name }}</p>
+<section id="search-and-find">
+  <div id="search-area">
+    <h1>Pet Collection</h1>
+    <form  action="{% url 'search' %}" method="POST">
+        {% csrf_token %}
+        <input type="search" placeholder="Search.." aria-label="Search" name="search_input">
+        <button type="submit" value="search"><i class="fas fa-search"></i> Search</button>
+    </form>
+    <div class="pet-desp">
+      <p id="count"></p>
     </div>
-    {% else %}
-    <div>
-        <img id="pet-pic" class="itemall" src="{{ profile }}" width="50%" >
-        <h2>{{ pet.pet_name }}</h2>
-        {% for specie in species %}
-        <p>{{ specie }}</p>
-        {% endfor %}
-        <p>{{ owner_name }}</p>
+  </div>
+  <div id="pet-list">
+    <div class ="allleft">
+      <div class="w3-left myleft" onclick="plusDivs(-1,1,'dog_item')">&#10094;</div>
     </div>
-    {% endif %}
-    {% endfor %}
-</div>
-<script src="{% static 'js/slideshow_homepage.js' %}"></script>
+
+    <div class="collect">
+        {% for pet, species, profile, owner_name in pets %}
+        <div class="petcard">
+            <h2>{{ pet.pet_name }}</h2>
+            <img src="{{ profile }}">
+            <p>
+                <i class="fas fa-dog"></i>
+                {% for specie in species %}
+                {{ specie }} ,
+                {% endfor %}
+            </p>
+            <p><i class="fas fa-user-circle"></i> Owner : {{ owner_name }}</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class ="allright">
+      <div class="w3-right myright" onclick="plusDivs(1,2,'dog_item')">&#10095;</div>
+    </div>
+  </div>
+</section>
+<script src="{% static 'js/pet-carosaul.js' %}"></script>
 {% endblock %}

@@ -17,11 +17,11 @@
         <h2 class="item1">BirthDay</h2>
         <h2 class="item3">Species</h2>
         <p class="item1">{{ pet.pet_born_day }} - {{ pet.pet_born_month }} - {{ pet.pet_born_year }}</p>
-        <select class="item3">
+        <p class="item3">
             {% for specie in species %}
-            <option>{{ specie }}</option>
+            {{ specie }},
             {% endfor %}
-        </select>
+        </p>
         <h2 class="item1">Hair Color</h2>
         <h2 class="item3">Eye Color</h2>
         <p class="item1">{{ pet.pet_hair_color }}</p>
@@ -31,29 +31,6 @@
             <button name="petedit" type="submit" value="{{ pet.pet_id }}" title="Click here to edit {{ pet.pet_name }}"><i class="fas fa-edit"></i></button>
         </form>
     </div>
-    <!--
-    <img id="pet-pic" src="{{ pet_img }}" >
-    <div>
-        <p>{{ pet.pet_type }}</p>
-        <h2>Name</h2>
-        <p>{{ pet.pet_name }}</p>
-        <h2>Species</h2>
-        {% for specie in species %}
-        <p>{{ specie }}</p>
-        {% endfor %}
-        <h2>Hair Color</h2>
-        <p>{{ pet.pet_hair_color }}</p>
-        <h2>Eye Color</h2>
-        <p>{{ pet.pet_eye_color }}</p>
-        <h2>BirthDay</h2>
-        <p>{{ pet.pet_born_day }} - {{ pet.pet_born_month }} - {{ pet.pet_born_year }}</p>
-        {% if private %}
-            <form action="{% url 'petedit' %}" method="POST" class="pet-form">
-                {% csrf_token %}
-                <div id="two"><button name="petedit" type="submit" value="{{ pet.pet_id }}">Edit</button></div>
-            </form>
-        {% endif %}
-    </div> -->
     <div id="profile-wrapper">
         <img id="pet-detail-owner" src="{{ owner_img }}" >
         <div class="mycard pet-detail-owner-card">

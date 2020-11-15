@@ -4,7 +4,7 @@
 <link rel="stylesheet" type="text/css" href="{% static '/css/profile.css'%}">
 <div class="w3-card-4">
     <header id="top-banner" class="w3-container w3-red w3-center">
-        <h1 style="color:white;font-family: 'Acme', sans-serif;"><i class="fas fa-user-circle"></i>Profile</h1>
+        <h1 style="color:white;font-family: 'Acme', sans-serif;"><i class="fas fa-user-circle"></i> Profile</h1>
     </header>
 </div>
 <div id="profile-wrapper">
@@ -49,24 +49,30 @@
         <h2 class="item1">BirthDay</h2>
         <h2 class="item3">Species</h2>
         <p class="item1">{{ pet.pet_born_day }} - {{ pet.pet_born_month }} - {{ pet.pet_born_year }}</p>
-        <select class="item3">
+        <p class="item3">
             {% for specie in species %}
-            <option>{{ specie }}</option>
+            {{ specie }},
             {% endfor %}
-        </select>
+        </p>
         <h2 class="item1">Hair Color</h2>
         <h2 class="item3">Eye Color</h2>
         <p class="item1">{{ pet.pet_hair_color }}</p>
         <p class="item3">{{ pet.pet_eye_color }}</p>
         <form class="item3" action="{% url 'petedit' %}" method="POST" class="pet-form">
             {% csrf_token %}
-            <button name="petedit" type="submit" value="{{ pet.pet_id }}" title="Click here to edit {{ pet.pet_name }}"><i class="fas fa-edit"></i></button>
+            <button name="petedit" type="submit" value="{{ pet.pet_id }}" title="Click here to edit {{ pet.pet_name }}."><i class="fas fa-edit"></i></button>
         </form>
         <!--This should be in the All-pet page -->
         <form  class="item3" action="{% url 'petdetail' %}" method="POST" class="pet-form">
             {% csrf_token %}
             <input type="hidden" id="user" name="user" value="{{ user.owner_username }}">
-            <button id="watch" name="petdetail" type="submit" value="{{ pet.pet_id }}" style="background-color:red; color:white;" title="WATCH"><i class="fas fa-eye"></i></button>
+            <button id="watch" name="petdetail" type="submit" value="{{ pet.pet_id }}" title="Click here to view more detail."><i class="fas fa-eye"></i></button>
+        </form>
+
+        <form  class="item3" action="{% url 'delpet' %}" method="POST" class="pet-form">
+            {% csrf_token %}
+            <input type="hidden" id="user" name="user" value="{{ user.owner_username }}">
+            <button id="watch" name="petdelete" type="submit" value="{{ pet.pet_id }}" title="Click here to delete {{ pet.pet_name }}."><i class="fas fa-trash"></i></button>
         </form>
     </div>
     {% endfor %}

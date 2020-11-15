@@ -14,5 +14,7 @@ urlpatterns = [
     path('petdetail', views.petdetail, name='petdetail'),
     path('petedit', views.petedit, name='petedit'),
     path('peteditchange', views.peteditchange, name='peteditchange'),
-    path('pet', views.pet, name="pet")
+    path('pet', views.pet, name="pet"),
+    path('search', views.search, name="search"),
+    path('delpet', views.delpet, name="delpet")
 ]

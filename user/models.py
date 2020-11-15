@@ -5,6 +5,7 @@ from django.db import models
 class Species(models.Model) :
     species_type = models.CharField(max_length=20)
     species_name = models.CharField(max_length=64)
+    # species_name = models.ForeignKey(Pet, related_name='species_name')
 
     def __str__(self):
         return f"{self.species_type} --> {self.species_name}"

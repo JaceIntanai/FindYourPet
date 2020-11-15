@@ -16,38 +16,40 @@ class FindYourPet_test_case(TestCase):
                                         , owner_phone="061234567"
                                         , owner_email="red@gg.com"
                                         , owner_profile="../FRONG.jpg")
-        self.owner2 = Owner.objects.create(owner_id="678910"
-                                        , owner_username="bluer"
-                                        , owner_name="bluer"
-                                        , owner_surname="masterblue"
-                                        , owner_phone="07891011"
-                                        , owner_email="blue@gg.com"
-                                        , owner_profile="../FRONG.jpg")
+        # self.owner2 = Owner.objects.create(owner_id="678910"
+        #                                 , owner_username="bluer"
+        #                                 , owner_name="bluer"
+        #                                 , owner_surname="masterblue"
+        #                                 , owner_phone="07891011"
+        #                                 , owner_email="blue@gg.com"
+        #                                 , owner_profile="../FRONG.jpg")
 
         # Create pets
-        Pet.objects.create(pet_id="123456"
-                        , pet_name="jook"
-                        , pet_type="dog"
-                        , pet_hair_color="brown"
-                        , pet_eye_color="black"
-                        , pet_born_day="22"
-                        , pet_born_month="9"
-                        , pet_born_year="2015"
-                        , pet_profile="../FRONG.jpg")
-
-        Pet.objects.create(pet_id="123457"
-                        , pet_name="kook"
-                        , pet_type="cat"
-                        , pet_hair_color="black"
-                        , pet_eye_color="blue"
-                        , pet_born_day="22"
-                        , pet_born_month="9"
-                        , pet_born_year="2015"
-                        , pet_profile="../FRONG.jpg")
+        self.pet1 = Pet.objects.create(pet_id="123456"
+                                        , pet_name="jook"
+                                        , pet_type="dog"
+                                        , pet_hair_color="brown"
+                                        , pet_eye_color="black"
+                                        , pet_born_day="22"
+                                        , pet_born_month="9"
+                                        , pet_born_year="2015"
+                                        , pet_profile="../FRONG.jpg")
+        # self.species = Species.objects.create(species_type="dog1", species_name="shiwawa")
+        # self.comment = Comment.objects.create(comment_id="567891", comment_detail="Wow, so cute!")
+        # self.forum = Forum.objects.create(forum_id="8521472", forum_topic="My pet is missing", forum_user="Reder")
+        # Pet.objects.create(pet_id="123457"
+        #                 , pet_name="kook"
+        #                 , pet_type="cat"
+        #                 , pet_hair_color="black"
+        #                 , pet_eye_color="blue"
+        #                 , pet_born_day="22"
+        #                 , pet_born_month="9"
+        #                 , pet_born_year="2015"
+        #                 , pet_profile="../FRONG.jpg")
         # Create Users
         self.user1 = User.objects.create_user("6310600000", "6310600000@test.com", "123456")
         self.user2 = User.objects.create_user("6210600001", "6210600001@test.com", "testuser2")
-        self.user_admin = User.objects.create_superuser("admin", "admin@admin.admin", "admin")
+        self.user3 = User.objects.create_superuser("admin", "admin@admin.admin", "admin")
         # Create Client
         self.client = Client()
 
@@ -74,24 +76,115 @@ class FindYourPet_test_case(TestCase):
         self.assertEqual(response.status_code,200)
 
     def test_login_3(self):
+        # with correct password
         user_test = User.objects.filter(email=self.user1.email).first()
-        print(user_test)
         user_test.is_active = True
         user_test.save()
-        # with correct password
         response = self.client.post('/login', {"username": user_test.username, "password": "123456"})
-        # print(self.redirect(response))
         self.assertEqual(response.status_code,302)
         self.assertEqual(self.redirect(response), '/')
 
+
     # Logout test
     def test_logout(self):
-        response = self.client.get('/logout')
-        self.assertEqual(response.status_code,302)
-        self.assertEqual(self.redirect(response), '/login')
+        # logout after login
+        self.client.force_login(self.user1)
+        response = self.client.post('/logout')
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(self.redirect(response), "/login")
+    # Test register
+    def test_register(self):
+        response = self.client.post('/ownregister',{'username':'6010610003',
+                                                    'name':'student',
+                                                    'surname':'student',
+                                                    'password':'',
+                                                    'confirm_password':'',
+                                                    'email':'dasda@gmail.com',
+                                                    'phone':'0123456','profile':''})
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response , 'user/ownRegister.html')
+        self.assertEqual(response.context["message"],"Choose your picture!")
+
+    def test_register_1(self):
+        response = self.client.post('/ownregister',{'username':'6010610003',
+                                                    'name':'student',
+                                                    'surname':'student',
+                                                    'password':'1',
+                                                    'confirm_password':'',
+                                                    'email':'dasda@gmail.com',
+                                                    'phone':'0123456','profile':''})
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response , 'user/ownRegister.html')
+        self.assertEqual(response.context["message"],"Not same password!")
+
+    def test_register_2(self):
+        client = Client()
+        response = self.client.post('/ownregister',{'username':'Reder',
+                                                    'name':'Reder',
+                                                    'surname':'student',
+                                                    'password':'',
+                                                    'confirm_password':'',
+                                                    'email':'dasda@gmail.com',
+                                                    'phone':'0123456','profile':''})
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response , 'user/ownRegister.html')
+        self.assertEqual(response.context["message"],"Username already used!")
 
     # Model test
-    def create_owner(self, oID="test_oID", username="test_username", name="test_name", surname="test_surname", phone="test_surname", email="test_email", profile="test_profile"):
+    @classmethod
+    def setUpTestData(cls):
+        cls.owner = Owner.objects.create(
+            owner_id="test_oID"
+            , owner_username="test_username"
+            , owner_name="test_name"
+            , owner_surname="test_surname"
+            , owner_phone="test_phone"
+            , owner_email="test_email"
+            , owner_profile="test_profile"
+        )
+        cls.pet = Pet.objects.create(
+            owner_id="552548"
+            ,pet_id="123457"
+            , pet_name="kook"
+            , pet_type="cat"
+            , pet_hair_color="black"
+            , pet_eye_color="blue"
+            , pet_born_day="22"
+            , pet_born_month="9"
+            , pet_born_year="2015"
+            , pet_profile="../FRONG.jpg"
+        )
+        cls.forum = Forum.objects.create(
+            forum_id="852147"
+            , forum_topic="My pet is missing"
+            , forum_user="Reder"
+        )
+
+    def test_comment_can_be_attached_to_multiple_forum(self):
+        comments = [Comment.objects.create() for _ in range(8)]
+        for comment in comments:
+            comment.comments.add(self.forum)
+        self.assertEquals(len(comments), self.forum.forum_comment.count())
+        for comment in comments:
+            self.assertIn(comment, self.forum.forum_comment.all())
+
+    def test_owner_can_be_attached_to_multiple_pet(self):
+        pets = [Pet.objects.create() for _ in range(8)]
+        for pet in pets:
+            pet.owners.add(self.owner)
+        self.assertEquals(len(pets), self.owner.owner_pet.count())
+        for pet in pets:
+            self.assertIn(pet, self.owner.owner_pet.all())
+
+    def test_pet_can_be_attached_to_multiple_species(self):
+        species = [Species.objects.create() for _ in range(11)]
+        for specy in species:
+            specy.pets.add(self.pet)
+        self.assertEquals(len(species), self.pet.pet_species.count())
+        for specy in species:
+            self.assertIn(specy, self.pet.pet_species.all())
+
+    def create_owner(self, oID="test_oID", username="test_username", name="test_name", surname="test_surname", phone="test_phone", email="test_email", profile="test_profile"):
         return Owner.objects.create(owner_id=oID
                                         , owner_username=username
                                         , owner_name=name
@@ -159,13 +252,3 @@ class FindYourPet_test_case(TestCase):
         self.assertTrue(isinstance(w, Forum))
         test_w = f"{w.forum_id} {w.forum_topic} {w.forum_user}"
         self.assertEqual(w.__str__(), test_w)
-
-    # Views test
-    # def test_owner_list_view(self):
-    #     w = self.create_owner()
-    #     url = reverse("views.owner")
-    #     resp = self.client.get(url)
-    #     test_w = f"{w.owner_id} {w.owner_username} {w.owner_name} {w.owner_surname} {w.owner_phone} {w.owner_profile}"
-
-    #     self.assertEqual(resp.status_code, 200)
-    #     self.assertIn(test_w, resp.content)

@@ -52,6 +52,7 @@
   transition: 1s;
 }
 .mycard svg:hover{
+  cursor:pointer;
   width:100px;
   height:100px;
   padding-left:10%;
@@ -141,6 +142,7 @@
   top:-400px;
   left:120px;
   transition:0.5s ease-out;
+  margin-bottom: 5px;
 }
 .pet-item button:hover{
   font-size:2.3em;
