@@ -1,5 +1,5 @@
 #intro1{
-  height:100vh;
+  height:80vh;
   display:grid;
   grid-template-columns: 60% 40%;
   animation : fadeIN 2s ease-out;
@@ -66,4 +66,37 @@
 @keyframes fadeIN{
   0% {opacity:0;}
   100% {opacity:1;}
+}
+#footer1{
+  overflow: hidden;
+  padding: 10px;
+  height:20vh;
+  animation : fadeIN 2.5s ease-out;
+  background-color:rgba(0,0,0,0.8);
+}
+#footer1 h1,#footer1 p{
+  cursor:help;
+  margin:3px;
+}
+#footer1 p{
+  color:cornsilk;
+}
+#footer1 i{
+  font-size:1.5em;
+  transition:0.5s ease-out
+}
+#footer1 i:hover{
+  font-size:1.8em;
+  transition:0.5s ease-out;
+}
+#footer1 svg{
+  width: 100px;
+  height: 100px;
+  margin:-40px 0px;
+  transition:0.5s ease-out
+}
+#footer1 svg:hover{
+  width: 110px;
+  height:110px;
+  transition:0.5s ease-out;
 }

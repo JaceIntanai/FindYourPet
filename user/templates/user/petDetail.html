@@ -9,8 +9,9 @@
     </header>
 </div>
 <!-- chang is here -->
+<!-- Upload Photo to Gallery -->
 <section class="pet-detail-area">
-    <div class="mycard pet-item w3-card-4">
+    <div class="mycard pet-item2 w3-card-4">
         <p class="petname">{{ pet.pet_name }}</p>
         <img id="pet-pic" class="itemall" src="{{ pet_img }}" width="50%" >
         <!-- <p>{{ pet.pet_type }}</p> -->
@@ -31,6 +32,7 @@
             <button name="petedit" type="submit" value="{{ pet.pet_id }}" title="Click here to edit {{ pet.pet_name }}"><i class="fas fa-edit"></i></button>
         </form>
     </div>
+
     <div id="profile-wrapper">
         <img id="pet-detail-owner" src="{{ owner_img }}" >
         <div class="mycard pet-detail-owner-card">
@@ -46,4 +48,27 @@
         </div>
     </div>
 </section>
+<section id="pet-gallery-area">
+    <div id="title"><h2 id="count">There are 0 picture in {{ pet.pet_name }}'s gallery</h2></div>
+    <form id="add_gallery" class="gallery-card" action="{% url 'uploadphoto' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div id="upload-preview">
+            <label for="pet_gallery" title="add new picture to {{ pet.pet_name }}'s gallery"><i class="fas fa-plus-circle" id="upload-icon"></i></label>
+            <input type="hidden" id="pet_id" name="pet_id" value="{{ pet.pet_id }}">
+            <input type="file" name="pet_gallery" id="pet_gallery" onchange="previewImageFixed(event)" accept=".jpeg, .png, .jpg">
+        </div>
+        <button id="upload" name="confirm" type="submit">ADD PHOTO</button>
+    </form>
+
+    {% if  gallery != 'none' %}
+    {% for photo in gallery %}
+    <div class="item gallery-card">
+        <img src="{{ photo }}">
+    </div>
+    {% endfor %}
+    {% endif %}
+
+</section>
+<script src={% static '/js/image-preview.js'%}></script>
+<script src={% static '/js/count_gallery.js' %}></script>
 {% endblock %}

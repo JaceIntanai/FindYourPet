@@ -2,16 +2,16 @@
 <div class="overlay-navigation" style="z-index: 99;">
   <nav role="navigation">
     <ul>
-      <li class= "navbar navbar1"><a href="{% url 'index' %}" data-content="Go to HOME &#128054"><h2>Home</h2></a></li>
-      <li class= "navbar navbar2"><a href="#" data-content="Go to Forum &#128049"><h2>FORUM</h2></a></li>
-      <li class= "navbar navbar3"><a href="{% url 'pet' %}" data-content="Pet Meee &#128038"><h2>PET</h2></a></li>
-      <li class= "navbar navbar4"><a href="{% url 'profile' %}" data-content="My Profile &#128048"><h2>PROFILE</h2></a></li>
-      <li class= "navbar navbar5"><a href="{% url 'about' %}" data-content="About Me &#128057"><h2>ABOUT</h2></a></li>
+      <li class= "navbar navbar1"><a href="{% url 'index' %}" data-content="&#127968 Homepage"><h2>Home</h2></a></li>
+      <li class= "navbar navbar2"><a href="{% url 'pet' %}" data-content="&#128227 Our Pet Community"><h2>PET</h2></a></li>
+      <li class= "navbar navbar3"><a href="{% url 'profile' %}" data-content="&#129321 Your Profile Page"><h2>PROFILE</h2></a></li>
+      <li class= "navbar navbar4"><a href="{% url 'about' %}" data-content="&#129300 Who Are We ?"><h2>ABOUT US</h2></a></li>
+      <li class= "navbar navbar5"><a href="{% url 'report' %}" data-content="&#128591 Got Any Problem ?"><h2>REPORT</h2></a></li>
     </ul>
   </nav>
 </div>
 <div>
-  <a class="logout" href={% url 'logout'%}><i class=" fas fa-sign-out-alt"></i></a>
+  <a class="logout" href={% url 'logout'%} title="Log out ?"><i class=" fas fa-sign-out-alt"></i></a>
 </div>
 <section class="home">
   <div class="open-overlay">

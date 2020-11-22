@@ -1,0 +1,90 @@
+{% extends "user_layout/layout_Main.html" %}
+{% load static %}
+{% block body %}
+<link rel="stylesheet" type="text/css" href="{% static '/css/report.css'%}">
+<div class="w3-card-4">
+    <header id="top-banner" class="w3-container w3-red w3-center">
+        <h1 style="color:white;font-family: 'Acme', sans-serif;"><i class="fas fa-bug"></i> Report Problem</h1>
+    </header>
+</div>
+
+<section id="report">
+    <div id="brief">
+        <div id="brief-short">
+            <h1><i class="fas fa-info-circle">Report</i></h1>
+        </div>
+        <div id="brief-long">
+            <h2>What should you report ?</h2>
+            <p>If you feel like there something <br>wrong on our website or you <br> suspect something that <br>shouldn't happen .<br><br>Feel free to report<br> to our admin and we will<br> begin to look into it shortly.
+            </p>
+        </div>
+    </div>
+    <div id="fill">
+        <form id="pet_form" action="{% url 'sendrequest' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h1>Fill your request report</h1>
+            <textarea name="detail" id="detail" cols="50" rows="10" placehorder="FILL YOUR REQUEST"></textarea>
+            <input type="hidden" id="user_id" name="user_id" value="{{ userId }}">
+            <button name="confirm" type="submit" value="Submit">REPORT</button>
+        </form>
+    </div>
+</section>
+<section id="history">
+    <h1> Report History</h1>
+    {% if not history %}
+    <p id="no-found">No Report History Found. Yay!!!</p>
+    {% else %}
+    {% for his in history %}
+    <div class="report-item">
+        <h2><i class="fas fa-bug"></i> #{{forloop.counter}}</h2>
+        <p>Issue: {{his.comment_detail}}</p>
+        {% if his.comment_status == False %}
+            <p class="report-status">NOT REVIEWED</p>
+            {% else %}
+            <p class="report-status">REVIEWED</p>
+            {% endif %}
+    </div>
+    {% endfor %}
+    {% endif %}
+    <!--
+    <div class="report-item">
+        <h2><i class="fas fa-bug"></i> #1</h2>
+        <p>Issue: BLAB B ABLNLAL BA BL ABL LA BALB LABL ALB A BALBLABLABALBLABALALB LABLABLA BABL ALB AL BLA BLA BLABLABLABAB LABLABLA BLABLABLABLABLA BLABLAB LABLBA LABBLALBLABLABLABLAL B</p>
+        <p class="report-status">REVIEWED</p>
+    </div>
+    <div class="report-item">
+        <h2><i class="fas fa-bug"></i> #2</h2>
+        <p>Issue: BLAB B ABLNLAL BA BL ABL LA BALB LABL ALB A BALBLABLABALBLABALALB LABLABLA BABL ALB AL BLA BLA BLABLABLABAB LABLABLA BLABLABLABLABLA BLABLAB LABLBA LABBLALBLABLABLABLAL B</p>
+        <p class="report-status">NOT REVIEWED</p>
+    </div>
+    -->
+</section>
+<!--
+<h1>REPORT PAGE</h1>
+<form id="pet_form" action="{% url 'sendrequest' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <h3>Fill your request report</h3>
+    <textarea name="detail" id="detail" cols="30" rows="10" placehorder="FILL YOUR REQUEST">
+
+    </textarea>
+    <input type="hidden" id="user_id" name="user_id" value="{{ userId }}">
+    <button name="confirm" type="submit" value="Submit">REPORT</button>
+</form>
+
+<h3>History</h3>
+{% if not history %}
+<p>NO REPORT HISTORY</p>
+{% else %}
+    {% for his in history %}
+    <p>{{his.comment_detail}}</p>
+    {% if his.comment_status == False %}
+    <p>NOT REVIEWED</p>
+    {% else %}
+    <p>REVIEWED</p>
+    {% endif %}
+    {% endfor %}
+{% endif %}
+-->
+<script src={% static '/js/image-preview.js'%}></script>
+<script src={% static '/js/report.js'%}></script>
+{% endblock %}

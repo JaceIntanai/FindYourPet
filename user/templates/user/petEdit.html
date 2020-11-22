@@ -14,7 +14,7 @@
     <div id="upload-wrapper">
         <div id="upload-preview"></div>
         <label for="pet_profile" title="upload your pet pic"><i class="fas fa-plus-circle" id="upload-icon"></i></label>
-        <input type="file" name="pet_profile" id="pet_profile" onchange="previewImageFixed(event)" accept=".jpeg , .jpg" value="{{ pet_profile }}">
+        <input type="file" name="pet_profile" id="pet_profile" onchange="previewImageFixed(event)" accept=".jpeg, .png, .jpg" value="{{ pet_profile }}">
     </div>
     <label for="pet_name">Pet Name</label><br>
     <input type="text" placeholder="Your Pet Name" name="pet_name" value="{{ pet.pet_name }}">

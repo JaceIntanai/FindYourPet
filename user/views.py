@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.template.context_processors import csrf
 from django.contrib.auth.models import User
-from .models import Owner
+# from .models import Owner
 import time
 import os
 
@@ -26,7 +26,7 @@ folder_pets = '1TPurKMay_uIlUCw80tclRhs75gSZS6IW'
 service = Create_Service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPE)
 
 
-from .models import Owner, Pet, Species
+from .models import Owner, Pet, Species, Comment
 
 # Create your views here.
 def owner(request):
@@ -41,6 +41,10 @@ def countUser() :
 
 def countPet() :
     count = Pet.objects.all().count()
+    return str(count + 1)
+
+def countComment() :
+    count = Comment.objects.all().count()
     return str(count + 1)
 
 def about(request) :
@@ -88,13 +92,21 @@ def logout_view(request):
 
 def admin(request):
     if request.user.is_staff:
-        return render(request, "user/adminPage.html")
+        users = []
+        comments = Comment.objects.filter(comment_status = False)
+        for comment in comments:
+            user = Owner.objects.get(owner_id = comment.owner_id)
+            users.append(user)
+        return render(request, "user/adminPage.html",{
+            "comments" : zip(comments,users)
+        })
     else :
         return HttpResponseRedirect(reverse("index"))
 
 def googledrive(file,select):
-    print(file.name)
-    mime_type = 'image/jpeg'
+    file_detail = file.name.split(".")
+    print(file_detail)
+    mime_type = f'image/{file_detail[1]}'
     if select == "users":
         path = default_storage.save(
         '{}'.format(file),
@@ -124,47 +136,47 @@ def googledrive(file,select):
 
 def ownregister(request):
     if request.method == "POST":
-            username = request.POST["username"]
-            password = request.POST["password"]
-            confirm_password = request.POST["confirm_password"]
-            name = request.POST["name"]
-            surname = request.POST["surname"]
-            email = request.POST["email"]
-            phone = request.POST["phone"]
-            img = request.FILES["profile"] if "profile" in request.FILES else False
-            print(img)
-            users = Owner.objects.filter(owner_username = username)
-            if password != confirm_password :
-                return render(request, "user/ownRegister.html",{
-                    "message" : "Not same password!"
-                })
-            if img == False :
-                return render(request, "user/ownRegister.html",{
-                    "message" : "Choose your picture!"
-                })
-            if not users and img != False:
-                items = googledrive(img,"users")
-                User.objects.create_user(
-                    username = username,
-                    password = password,
-                    email = email,
-                    first_name = name,
-                    last_name = surname
-                )
-                Owner.objects.create(
-                    owner_profile = items,
-                    owner_id = countUser(),
-                    owner_username = username,
-                    owner_name = name,
-                    owner_surname = surname,
-                    owner_phone = phone,
-                    owner_email = email
-                )
-                return HttpResponseRedirect(reverse("login"))
-            else :
-                return render(request, "user/ownRegister.html",{
-                    "message" : "Username already used!"
-                })
+        username = request.POST["username"]
+        password = request.POST["password"]
+        confirm_password = request.POST["confirm_password"]
+        name = request.POST["name"]
+        surname = request.POST["surname"]
+        email = request.POST["email"]
+        phone = request.POST["phone"]
+        img = request.FILES["profile"] if "profile" in request.FILES else False
+        # print(img)
+        users = Owner.objects.filter(owner_username = username)
+        if password != confirm_password :
+            return render(request, "user/ownRegister.html",{
+                "message" : "Not same password!"
+            })
+        if img == False :
+            return render(request, "user/ownRegister.html",{
+                "message" : "Choose your picture!"
+            })
+        if not users and img != False:
+            items = googledrive(img,"users")
+            User.objects.create_user(
+                username = username,
+                password = password,
+                email = email,
+                first_name = name,
+                last_name = surname
+            )
+            Owner.objects.create(
+                owner_profile = items,
+                owner_id = countUser(),
+                owner_username = username,
+                owner_name = name,
+                owner_surname = surname,
+                owner_phone = phone,
+                owner_email = email
+            )
+            return HttpResponseRedirect(reverse("login"))
+        else :
+            return render(request, "user/ownRegister.html",{
+                "message" : "Username already used!"
+            })
 
     return render(request, "user/ownRegister.html")
 
@@ -186,12 +198,12 @@ def profile(request):
         pet_spec = []
         for specie in pet.pet_species.all():
             pet_spec.append(specie.species_name)
-        print(pet_spec)
+        # print(pet_spec)
         pet_species.append(pet_spec)
-    if len(pet_owner) == 0:
-        print("NO PETS")
-    else :
-        print(pets)
+    # if len(pet_owner) == 0:
+    #     print("NO PETS")
+    # else :
+    #     print(pets)
 
     return render(request, "user/profilePage.html",{
         "type_select" : type_selected,
@@ -232,7 +244,7 @@ def petregister(request):
         # print(wdy[0], wdy[1], wdy[2])
         if img != False:
             items = googledrive(img,"pets")
-            print(type(items))
+            # print(type(items))
             owner = Owner.objects.get(owner_username=request.user.username)
             pet = Pet.objects.create(
                 owner_id = ownerId,
@@ -262,8 +274,8 @@ def petregister(request):
 def petdetail(request):
     if request.method == "POST" :
         pet = Pet.objects.get(pet_id=request.POST["petdetail"])
-        owner = request.POST["user"]
-    owner_pet = Owner.objects.get(owner_username = owner)
+        # owner = request.POST["user"]
+    owner_pet = Owner.objects.get(owner_id = pet.owner_id)
     enter_owner = request.user.username
     private = True if owner == enter_owner else False
     pet_img = f'https://drive.google.com/uc?id={pet.pet_profile}'
@@ -271,6 +283,7 @@ def petdetail(request):
     pet_spec = []
     for specie in pet.pet_species.all():
         pet_spec.append(specie.species_name)
+    gallery = pet.pet_gallery.split(",") if pet.pet_gallery != 'none' else 'none'
     return render(request, "user/petDetail.html",{
         "pet_img" : pet_img,
         "pet" : pet,
@@ -278,13 +291,14 @@ def petdetail(request):
         "owner_img" : owner_img,
         "owner" : owner_pet,
         "private" : private,
+        "gallery" :gallery
     });
 
 def petedit(request):
     if request.method == "POST" :
         pet = Pet.objects.get(pet_id=request.POST["petedit"])
     pet_profile = f'https://drive.google.com/uc?id={pet.pet_profile}'
-    print(pet_profile)
+    # print(pet_profile)
     species = Species.objects.filter(species_type = pet.pet_type)
     return render(request, "user/petEdit.html",{
         "pet" : pet,
@@ -388,16 +402,16 @@ def search(request):
                 pet_spec.append(specie.species_name)
             species_pets.append(pet_spec)
     return render(request, "user/petPage.html",{
-        "pets" : zip(pets,species_pets,profile_pets,owner_name)
+        "pets" : list(zip(pets,species_pets,profile_pets,owner_name))
     })
 
 def delpet(request):
     if request.method == "POST" :
         pet_id = request.POST["petdelete"]
-        owner = request.POST["user"]
-    owner_pet = Owner.objects.get(owner_username = owner)
+        # owner = request.POST["user"]
     pet = Pet.objects.filter(pet_id = pet_id)
     pet_s = Pet.objects.get(pet_id = pet_id)
+    owner_pet = Owner.objects.get(owner_id = pet_s.owner_id)
     owner_pet.owner_pet.remove(pet_s)
     pet.update(
         owner_id = "0",
@@ -414,5 +428,61 @@ def delpet(request):
     for specie in pet_s.pet_species.all():
         pet_s.pet_species.remove(specie)
 
+    return HttpResponseRedirect(reverse("profile"))
+
+def uploadphoto(request):
+    if request.method == "POST":
+        pet_id = request.POST["pet_id"]
+        img = request.FILES["pet_gallery"] if "pet_gallery" in request.FILES else False
+    pet = Pet.objects.filter(pet_id = pet_id)
+    petDetail = Pet.objects.get(pet_id = pet_id)
+    petGallery = petDetail.pet_gallery
+    if img != False:
+        items = googledrive(img,"pets")
+        photo = f'https://drive.google.com/uc?id={items}'
+        # print(type(items))
+        if petGallery == 'none':
+            pet.update(
+                pet_gallery = photo
+            )
+        else:
+            pet.update(
+                pet_gallery = petGallery + "," + photo
+            )
 
     return HttpResponseRedirect(reverse("profile"))
+
+def report(request):
+
+    user_id = Owner.objects.get(owner_username = request.user.username).owner_id
+    history = Comment.objects.filter(owner_id = user_id)
+
+    return  render(request, "user/reportPage.html",{
+        "userId" : user_id,
+        "history" : history
+    })
+
+def sendrequest(request):
+    if request.method == "POST":
+        user_id = request.POST["user_id"]
+        detail = request.POST["detail"]
+
+    comment = Comment.objects.create(
+        comment_id = countComment(),
+        owner_id = user_id,
+        comment_detail = detail
+    )
+
+    return HttpResponseRedirect(reverse("report"))
+
+def adminconfirm(request):
+    if request.method == "POST":
+        comment_id = request.POST["comment_id"]
+
+    comment = Comment.objects.filter(comment_id = comment_id)
+
+    comment.update(
+        comment_status = True
+    )
+
+    return HttpResponseRedirect(reverse("admin"))

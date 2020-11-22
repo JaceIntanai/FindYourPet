@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Species, Pet, Owner
+from .models import Species, Pet, Owner, Comment
 # Register your models here.
 
 class Owner_list(admin.ModelAdmin):
@@ -12,7 +12,11 @@ class Pet_list(admin.ModelAdmin):
 class Species_list(admin.ModelAdmin):
     list_display = ("species_type","species_name")
 
+class Comment_list(admin.ModelAdmin):
+    list_display = ("comment_id", "owner_id", "comment_detail", "comment_status")
+
 
 admin.site.register(Species,Species_list)
 admin.site.register(Pet,Pet_list)
 admin.site.register(Owner,Owner_list)
+admin.site.register(Comment,Comment_list)

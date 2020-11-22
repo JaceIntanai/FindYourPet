@@ -1,5 +1,5 @@
 from django.test import TestCase, Client
-from .models import Species, Pet, Owner, Comment, Forum
+from .models import Species, Pet, Owner, Comment
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.urls import reverse
@@ -17,7 +17,7 @@ class FindYourPet_test_case(TestCase):
                                         , owner_surname="masterred"
                                         , owner_phone="061234567"
                                         , owner_email="red@gg.com"
-                                        , owner_profile="../FRONG.jpg")
+                                        , owner_profile="../FRONG.jpeg")
         # self.owner2 = Owner.objects.create(owner_id="678910"
         #                                 , owner_username="bluer"
         #                                 , owner_name="bluer"
@@ -35,7 +35,8 @@ class FindYourPet_test_case(TestCase):
                                         , pet_born_day="22"
                                         , pet_born_month="9"
                                         , pet_born_year="2015"
-                                        , pet_profile="../FRONG.jpg")
+                                        , pet_profile="../FRONG.jpeg"
+                                        , owner_id="612345")
         # self.species = Species.objects.create(species_type="dog1", species_name="shiwawa")
         # self.comment = Comment.objects.create(comment_id="567891", comment_detail="Wow, so cute!")
         # self.forum = Forum.objects.create(forum_id="8521472", forum_topic="My pet is missing", forum_user="Reder")
@@ -185,19 +186,7 @@ class FindYourPet_test_case(TestCase):
             , pet_born_year="2015"
             , pet_profile="../FRONG.jpg"
         )
-        cls.forum = Forum.objects.create(
-            forum_id="852147"
-            , forum_topic="My pet is missing"
-            , forum_user="Reder"
-        )
 
-    def test_comment_can_be_attached_to_multiple_forum(self):
-        comments = [Comment.objects.create() for _ in range(8)]
-        for comment in comments:
-            comment.comments.add(self.forum)
-        self.assertEquals(len(comments), self.forum.forum_comment.count())
-        for comment in comments:
-            self.assertIn(comment, self.forum.forum_comment.all())
 
     def test_owner_can_be_attached_to_multiple_pet(self):
         pets = [Pet.objects.create() for _ in range(8)]
@@ -266,20 +255,45 @@ class FindYourPet_test_case(TestCase):
         test_w = f"{w.species_type} --> {w.species_name}"
         self.assertEqual(w.__str__(), test_w)
 
-    def create_comment(self, comment_id="56789", comment_detail="Wow, so cute"):
-        return Comment.objects.create(comment_id=comment_id, comment_detail=comment_detail)
+    def create_comment(self, comment_id="56789", owner_id="452565", comment_detail="Wow, so cute", comment_status=False):
+        return Comment.objects.create(comment_id=comment_id, owner_id=owner_id, comment_detail=comment_detail, comment_status=comment_status)
 
     def test_create_comment(self):
         w = self.create_comment()
         self.assertTrue(isinstance(w, Comment))
-        test_w = f"{w.comment_id} {w.comment_detail}"
+        test_w = f"{w.comment_id} {w.owner_id} {w.comment_detail} {w.comment_status}"
         self.assertEqual(w.__str__(), test_w)
 
-    def create_forum(self, forum_id="852147", forum_topic="My pet is missing", forum_user="Reder"):
-        return Forum.objects.create(forum_id=forum_id, forum_topic=forum_topic, forum_user=forum_user)
+    def test_search(self):
+        self.client.force_login(self.user1)
+        response = self.client.post(reverse('search'),{'search_input' : 'jook'})
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response , 'user/petPage.html')
+        self.assertEqual(len(response.context["pets"]), 1)
 
-    def test_create_forum(self):
-        w = self.create_forum()
-        self.assertTrue(isinstance(w, Forum))
-        test_w = f"{w.forum_id} {w.forum_topic} {w.forum_user}"
-        self.assertEqual(w.__str__(), test_w)
+    def test_detail(self):
+        self.client.force_login(self.user1)
+        response = self.client.post(reverse('petdetail'),{'petdetail' : '123456','user' : 'Reder'})
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response , 'user/petDetail.html')
+        self.assertEqual(response.context["pet"], self.pet1)
+        # self.assertEqual(response.context["species"], self.pet1.pet_species)
+        self.assertEqual(response.context["owner"], self.owner1)
+
+    def test_add_pet(self):
+        self.client.force_login(self.user1)
+        response = self.client.post(reverse('addpet'),{'type_pet' : 'cat','user' : self.owner1.owner_id})
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response , 'user/petRegister.html')
+        self.assertEqual(response.context["pet_type"], 'cat')
+        self.assertEqual(response.context["ownerId"], self.owner1.owner_id)
+
+    def test_petedit(self):
+        self.client.force_login(self.user1)
+        response = self.client.post(reverse('petedit'),{'petedit':'123456'})
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'user/petEdit.html')
+        self.assertEqual(response.context["pet"],self.pet1)
+        # self.assertEqual(response.context["species"],self.pet1.pet_type)
+        
+        

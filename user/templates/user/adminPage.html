@@ -1,4 +1,79 @@
-{% extends "user_layout/layout.html" %}
+{% extends "user_layout/layout_Main.html" %}
+{% load static %}
 {% block body %}
-<h1>ADMIN PAGE</h1>
+<link rel="stylesheet" type="text/css" href="{% static '/css/report.css'%}">
+<section id="blk">
+    <div class="w3-card-4">
+        <header id="top-banner" class="w3-container w3-red w3-center">
+            <h1 style="color:white;font-family: 'Acme', sans-serif;"><i class="fas fa-users-cog"></i> Administrator</h1>
+        </header>
+    </div>
+
+    <section id="ad-top">
+        <h1 id="ad-head">Welcome Back,The creator.</h1>
+        <h2 id="ad-desp"></h2>
+    </section>
+
+    <section id="issue-list">
+        {% for comment, user in comments %}
+        <div class="report-item">
+            <h2><i class="fas fa-flag"></i> Issue ID.{{comment.comment_id}} created by {{user.owner_name}} {{user.owner_surname}}</h2>
+            <p>Issue: {{comment.comment_detail}}</p>
+            <form id="pet_form" action="{% url 'adminconfirm' %}" method="POST">
+                {% csrf_token %}
+                <button name="comment_id" type="submit" value="{{ comment.comment_id }}" title="Are you sure ?">CHECK</button>
+            </form>
+        </div>
+        {% endfor %}
+    </section>
+
+</section>
+<!--<div class="w3-card-4">
+    <header id="top-banner" class="w3-container w3-red w3-center">
+        <h1 style="color:white;font-family: 'Acme', sans-serif;"><i class="fas fa-users-cog"></i> Administrator</h1>
+    </header>
+</div>
+<section id="ad-top">
+    <h1 id="ad-head">Welcome Back,The creator.</h1>
+    <h2 id="ad-desp"></h2>
+</section>
+
+<section id="issue-list">
+    {% for comment, user in comments %}
+    <div class="report-item">
+        <h2><i class="fas fa-flag"></i> Issue ID.{{comment.comment_id}} created by {{user.owner_name}} {{user.owner_surname}}</h2>
+        <p>Issue: {{comment.comment_detail}}</p>
+        <form id="pet_form" action="{% url 'adminconfirm' %}" method="POST">
+            {% csrf_token %}
+            <button name="comment_id" type="submit" value="{{ comment.comment_id }}" title="Are you sure ?">CHECK</button>
+        </form>
+    </div>
+    {% endfor %}
+</section>
+-->
+<!-- <table>
+    <tr>
+        <th>Comment ID</th>
+        <th>User ID</th>
+        <th>User Name</th>
+        <th>Comment Detail</th>
+        <th>Actions</th>
+    </tr>
+{% for comment, user in comments %}
+    <tr>
+        <td>{{comment.comment_id}}</td>
+        <td>{{comment.owner_id}}</td>
+        <td>{{user.owner_name}} {{user.owner_surname}}</td>
+        <td>{{comment.comment_detail}}</td>
+        <td>
+            <form id="pet_form" action="{% url 'adminconfirm' %}" method="POST">
+                {% csrf_token %}
+                <button name="comment_id" type="submit" value="{{ comment.comment_id }}">CHECK</button>
+            </form>
+        </td>
+    </tr>
+{% endfor %}
+</table>
+-->
+<script src={% static '/js/admin.js'%}></script>
 {% endblock %}

@@ -16,6 +16,7 @@
                     <li>You can post on our Pet.</li>
                     <li>You will love this place <3 .</li>
                 </p>
+                <img src="https://i.imgur.com/NDMut5j.jpg">
             </div>
         </div>
         <form action="{% url 'ownregister' %}" method="POST" enctype="multipart/form-data" id="register">
@@ -24,7 +25,7 @@
             <div id="upload-wrapper">
             <div id="upload-preview"></div>
             <label for="profile" title="upload your pic"><i id="regis-icon"class="fas fa-plus-circle"></i></label>
-            <input type="file" name="profile" id="profile" onchange="previewImageFixed(event)" accept=".jpeg">
+            <input type="file" name="profile" id="profile" onchange="previewImageFixed(event)" accept=".jpeg, .png, .jpg">
             </div>
           <label for="name" class="label1">Name</label>
           <label for="surname">Surname</label><br>

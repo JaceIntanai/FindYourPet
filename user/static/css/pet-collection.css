@@ -1,15 +1,17 @@
+body{
+  font-family: 'Work Sans', sans-serif;
+}
 #search-and-find{
   display:grid;
-  grid-template-columns: 30% 70%;
-  margin: 10% 15%;
+  grid-template-columns: 40% 60%;
+  margin: 10% 10%;
   padding-left: 8%;
 }
 #search-area{
   padding: 20px;
-  margin-top: 8%;
+  margin-top: 5%;
   background-color:rgb(255, 233, 168);
-  border-bottom-left-radius: 40px;
-  border-bottom-right-radius: 40px;
+  border-radius: 5px 5px 40px 40px;
   box-shadow: 5px 8px 20px rgba(0,0,0,0.5);
   margin-bottom: 40px;
 }
@@ -19,44 +21,62 @@
   border-radius: 5px;
   font-size: 16px;
   background: white;
-  width: 100%;
+  width: 50%;
   border:0;
   padding: 10px 10px;
   margin: 15px 0px;
+  transition:1s ease-out;
+}
+#search-area input:hover{
+  width: 80%;
+  transition:1s ease-out;
 }
 #search-area button{
-  font-family: 'Inconsolata', monospace;
+  cursor:pointer;
+  color:#7b462e;
   font-size:1.5em;
   padding:5px 10px;
-  border-radius:15px;
+  border-radius:10px;
   background-color: rgba(250, 248, 120,1);
-  border: 3px solid rgba(255,20,60,0.2);
+  border: 3px solid rgba(255,20,60,0.1);
   transition:1s;
+}
+#search-area button:hover{
+  padding:5px 20px;
+  background-color: rgb(255 252 77);
+  border: 1px solid rgba(255,20,60,0.2);
+  transition:1s;
+}
+#search-area h1{
+  font-family: 'Work Sans', sans-serif;
+  font-weight: bold;
 }
 #pet-list{
   display:grid;
-  grid-template-columns: 100px 450px 100px;
+  grid-template-columns: 20% 450px 10%;
   text-align:center;
 }
 .allleft{
-  padding-left: 80%;
+  padding-left: 60%;
 }
 .allright{
-  padding-right: 80%;
+  padding-right: 60%;
 }
 .collect{
+  /* background-color: transparent; */
   overflow:hidden;
-  padding:5% 10%;
-  height: 460px
+  padding:5% 5%;
+  height: 460px;
 }
 .petcard{
+  margin-right: 0;
   width:350px;
   height:400px;
   background-color: rgba(255, 248, 220,1);
   padding: 10px;
   margin-bottom:45px;
   border-radius: 5px 5px 20px 20px;
-  box-shadow: 5px 15px 30px rgba(0,0,0,0.8);
+  box-shadow: 15px 15px 15px rgba(0,0,0,0.5);
 }
 .petcard img{
   border-radius: 100px;
@@ -85,6 +105,32 @@
   color:rgb(246,200,99);
   font-size:4em;
   padding-top:200px;
+}
+#count{
+  font-size:1.3em;
+  color:chocolate
+}
+button#watch{
+  cursor:pointer;
+  font-size:2em;
+  padding: 5px 10px;
+  color:chocolate;
+  background-color:rgb(255, 238, 170);
+  border:none;
+  border-radius:150px;
+  box-shadow:2px 2px 5px rgba(0,0,0,0.2);
+  position:relative;
+  top:-370px;
+  left:180px;
+  transition:0.5s ease-out;
+  margin-bottom: 5px;
+}
+button#watch:hover{
+  font-size:2.8em;
+  padding: 5px 10px;
+  box-shadow:2px 2px 5px rgba(0,0,0,0.5);
+  position:relative;
+  transition:0.5s ease-out;
 }
 /* my animation keyframes */
 .LeftSlideOut{

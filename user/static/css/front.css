@@ -2,14 +2,13 @@ body {
   overflow:hidden;
   display:flex;
   width:100%;
-  font-family: "Asap", sans-serif;
+  font-family: 'Work sans', sans-serif;
   background-image: url("https://i.imgur.com/vk2NNwa.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
 }
-/* Style for LoginPage.html */
 .login {
   overflow: hidden;
   background-color: Moccasin;
@@ -41,34 +40,38 @@ body {
   z-index: -1;
 }
 .login::before {
-  left: 40%;
-  bottom: -130%;
+  left: 20%;
+  bottom: -93%;
   background-color: rgba(255,165,0, 0.25);
   -webkit-animation: wawes 6s infinite linear;
   -moz-animation: wawes 6s infinite linear;
   animation: wawes 6s infinite linear;
 }
 .login::after {
-  left: 35%;
-  bottom: -125%;
+  left: 25%;
+  bottom: -100%;
   background-color: rgba(250,185,56, 0.4);
   -webkit-animation: wawes 7s infinite;
   -moz-animation: wawes 7s infinite;
   animation: wawes 7s infinite;
 }
 .login > input {
-  font-family: "Asap", sans-serif;
   display: block;
   border-radius: 5px;
   font-size: 16px;
   background: white;
-  width: 100%;
+  width: 50%;
   border: 0;
   padding: 10px 10px;
-  margin: 15px -10px;
+  margin: 15px 20%;
+  transition: 0.5s ease-out;
+}
+.login > input:hover{
+  width: 80%;
+  margin: 15px 8%;
+  transition: 0.5s ease-out;
 }
 .login > button {
-  font-family: "Asap", sans-serif;
   cursor: pointer;
   color: #fff;
   font-size: 16px;
@@ -83,6 +86,10 @@ body {
   -webkit-transition: background-color 300ms;
   -moz-transition: background-color 300ms;
   transition: background-color 300ms;
+}
+.login img{
+  width:80%;
+  padding-left:10%;
 }
 .login > button:hover {
   background-color: #f24353;
@@ -141,55 +148,20 @@ body {
   background-color: #f24353;
   transition:1s;
 }
-/*
-.wrapper{
-  display: block;
-  overflow:hidden;
-}
-
-.wrapper::before,.wrapper::after{
-  content: '';
-  position: absolute;
-  width: 500px;
-  height: 500px;
-  border-top-left-radius: 40%;
-  border-top-right-radius: 45%;
-  border-bottom-left-radius: 35%;
-  border-bottom-right-radius: 40%;
-  z-index: 1;
-}
-.wrapper::before {
-  left: 40%;
-  bottom: -10%;
-  background-color: rgba(255,165,0, 0.25);
-  -webkit-animation: wawes 6s infinite linear;
-  -moz-animation: wawes 6s infinite linear;
-  animation: wawes 6s infinite linear;
-}
-.wrapper::after {
-  left: 45%;
-  bottom: -15%;
-  background-color: rgba(250,185,56, 0.4);
-  -webkit-animation: wawes 7s infinite;
-  -moz-animation: wawes 7s infinite;
-  animation: wawes 7s infinite;
-}
-*/
 .myform{
   overflow:hidden;
   display: grid;
-  grid-template-columns: minmax(50px,max-content) 500px;
-  margin:30px 300px;
-  border-radius: 30px;
-  box-shadow: 15px 20px 30px 1px rgba(2, 128, 144, 0.4);
+  grid-template-columns: minmax(80px,fit-content) 500px;
+  margin:30px 25vw;
+  border-radius: 10px 10px 30px 30px;
+  box-shadow: 15px 20px 30px rgba(255, 140, 0, 0.3);
 }
 #brief{
   display: grid;
   width:50px;
   background-color: BurlyWood;
   padding: 30px 30px;
-  border-radius: 30px;
-  border-radius : 30px 0px 0px 30px;
+  border-radius : 10px 0px 0px 30px;
   transition:1s;
 }
 #brief:hover{
@@ -198,7 +170,8 @@ body {
   left:0;
 }
 #brief-short{
-  font-size: 2em;
+  color:cornsilk;
+  font-size: 2.3em;
   position: absolute;
 }
 #brief-long{
@@ -206,8 +179,19 @@ body {
   opacity:0;
   position: absolute;
 }
+#brief-long img{
+  width:16%;
+  margin-top:2%;
+  margin-left:1%;
+  border-radius: 2px 2px 10px 10px;
+  box-shadow:3px 3px rgba(0,0,0,0.3);
+}
 #brief-long h1{
+  color:cornsilk;
   font-size:1.5em;
+}
+#brief-long p,#brief-long li{
+  color: chocolate;
 }
 #brief-short h1{
   font-size:1em;
@@ -217,7 +201,7 @@ body {
   grid-column: 2;
   background-color: Moccasin;
   padding: 10px 40px;
-  border-radius : 0px 30px 30px 0px;
+  border-radius : 0px 10px 30px 0px;
 }
 .label1{
   padding-left:5px;
@@ -254,6 +238,11 @@ input#longinput{
   background-color: #f24353;
   transition: 0.3s;
 }
+#register label,#register h1{
+  color:chocolate;
+  font-weight: bold;
+}
+
 #profile{
   display:none;
 }

@@ -32,10 +32,14 @@
             <p>
                 <i class="fas fa-dog"></i>
                 {% for specie in species %}
-                {{ specie }} ,
+                  {{ specie }} ,
                 {% endfor %}
             </p>
             <p><i class="fas fa-user-circle"></i> Owner : {{ owner_name }}</p>
+            <form  class="item3" action="{% url 'petdetail' %}" method="POST" class="pet-form">
+                {% csrf_token %}
+                <button id="watch" name="petdetail" type="submit" value="{{ pet.pet_id }}" title="More detail about {{ pet.pet_name }}."><i class="fas fa-eye"></i></button>
+            </form>
         </div>
         {% endfor %}
     </div>

@@ -1,0 +1,172 @@
+body{
+    font-family: 'Work sans', sans-serif;
+}
+#report{
+  overflow:hidden;
+  display: grid;
+  padding-bottom:50px;
+  padding-right:10px;
+  grid-template-columns: minmax(max-content,min-content) 500px;
+  margin-left: 25vw;
+  margin-top: 15vh;
+  margin-bottom: 1vh;
+}
+#brief{
+  display: grid;
+  width:80px;
+  height:400px;
+  background-color: rgb(255 191 114);
+  padding: 10px 10px;
+  border-radius : 5px 0px 0px 20px;
+  transition:1s;
+  box-shadow: 15px 10px 30px rgb(255 66 0 / 23%);
+}
+#brief:hover{
+  width:280px;
+  padding: 10px 20px;
+  transition:1s;
+  left:0;
+}
+#brief-short{
+  color:cornsilk;
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  position: absolute;
+}
+#brief-short h1{
+  font-size:2.8em;
+}
+#brief-long{
+  width:280px;
+  opacity:0;
+  position: absolute;
+}
+#brief-long h2{
+  font-size:1.3em;
+  font-weight:bold;
+}
+#brief-long p{
+  font-size: 1.1em;
+  color:rgb(240, 248, 255);
+}
+#fill{
+    width:100%;
+    background-color: #f1cca0;
+    padding: 10px 20px;
+    border-radius : 0px 5px 20px 0px;
+    box-shadow: 15px 10px 30px rgb(255 66 0 / 23%);
+}
+#fill textarea{
+  background-color:rgb(250, 235, 215);
+}
+#fill h1{
+    font-size: 1.8em;
+    font-weight: bold;
+}
+#fill button{
+  cursor: pointer;
+  color: #fff;
+  font-size: 1.5em;
+  text-transform: uppercase;
+  border: 0;
+  padding: 10px;
+  margin-left: 68%;
+  border-radius: 5px;
+  background-color: #f45b69;
+  transition: 0.5s;
+}
+#fill button:hover{
+  padding: 15px;
+  margin-left: 66%;
+  background-color: #f24353;
+  transition: 0.5s;
+}
+
+#history{
+  padding: 1vh 3vw;
+}
+#history h1{
+  font-weight:bold;
+  font-size:2.5em;
+  color:brown
+}
+#no-found{
+  padding-left:30px;
+  font-size:1.3em;
+  color:red;
+}
+.report-item{
+  width:70vw;
+  background-color: #f1cca0;
+  border-radius: 5px 50px 50px 5px;
+  box-shadow:10px 10px 20px rgba(255, 215, 0,0.2);
+  padding:20px;
+  margin-bottom:30px;
+}
+.report-item h2{
+  font-size:1.8em;
+  font-weight:bold;
+  margin:5px;
+}
+.report-item p{
+  font-size:1.2em;
+}
+.report-status{
+  font-weight:bold;
+  padding-left:70%;
+}
+
+/* for admin page */
+#blk{
+  display: block;
+  overflow: auto;
+  min-height:100vh;
+  background-color:rgba(0,0,0,0.3);
+  animation : fadeIN 2s ease-out;
+}
+#ad-head{
+  margin:0;
+  color: #fdff7f;
+  padding-top: 6%;
+  width:100%;
+  text-align:center;
+  font-size:2.8em;
+}
+#ad-desp{
+  margin:0;
+  color: #feffb2;
+  width:100%;
+  text-align:center;
+  font-size:2.3em;
+}
+#issue-list{
+  padding-top:10vh;
+  padding-left:2vw;
+}
+#issue-list h2{
+  font-size:1.6em;
+}
+#issue-list p{
+  padding-left:30px;
+}
+#issue-list button{
+  cursor: pointer;
+  color: #fff;
+  font-size: 1.5em;
+  text-transform: uppercase;
+  border: 0;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #f45b69;
+  transition: 0.5s;
+}
+#issue-list button:hover{
+  padding: 15px;
+  margin-left:0.5%;
+  background-color: #f24353;
+  transition: 0.5s;
+}
+@keyframes fadeIN{
+  0% {opacity:0;}
+  100% {opacity:1;}
+}

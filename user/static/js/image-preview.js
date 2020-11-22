@@ -1,14 +1,12 @@
 /* recall all variable to be used in this JS effect file */
-var short = document.getElementById('brief-short').style;
-var long = document.getElementById('brief-long').style;
 var brief = document.getElementById('brief');
-var icon = document.getElementById('regis-icon').style;
 var regis = document.getElementById('upload-preview');
-var wrap = document.getElementById('upload-wrapper').style;
 
 /* Register Icon Effect */
 
 var registerIconIn = function(event){
+  let wrap = document.getElementById('upload-wrapper').style;
+  let icon = document.getElementById('regis-icon').style;
   console.log('icon');
     wrap.height="120px";
     wrap.transition="1s";
@@ -18,6 +16,8 @@ var registerIconIn = function(event){
     icon.transition="1s";
 }
 var registerIconOut = function(event){
+  let wrap = document.getElementById('upload-wrapper').style;
+  let icon = document.getElementById('regis-icon').style;
   console.log('back icon');
     wrap.height="60px";
     wrap.transition="1s";
@@ -27,11 +27,7 @@ var registerIconOut = function(event){
     icon.left="35px";
     icon.transition="1s";
 }
-regis.addEventListener('mouseover',registerIconIn);
-regis.addEventListener('mouseleave',registerIconOut);
-
 /* Main Image-Preview Effect */
-
 var previewImage = function(event){
   let reader = new FileReader();
   let click = document.getElementById('upload-icon').style;
@@ -50,6 +46,7 @@ var previewImageFixed = function(event){
   reader.onload = function(){
     output.backgroundImage='url('+reader.result+')';
   }
+  console.log("load completed!");
   reader.readAsDataURL(event.target.files[0]);
 };
 
@@ -57,6 +54,8 @@ var previewImageFixed = function(event){
 
 var slideInInfo = function(event){
 
+    let short = document.getElementById('brief-short').style;
+    let long = document.getElementById('brief-long').style;
     //short.display="none";
     short.opacity="0";
     short.transition="0.5s";
@@ -67,6 +66,9 @@ var slideInInfo = function(event){
 }
 var slideOutInfo = function(event){
 
+    let short = document.getElementById('brief-short').style;
+    let long = document.getElementById('brief-long').style;
+
     //short.display="grid";
     short.opacity="100%";
     short.transition="1.5s";
@@ -75,5 +77,10 @@ var slideOutInfo = function(event){
     long.opacity="0";
     long.transition="0.3s";
 }
+
 brief.addEventListener('mouseover',slideInInfo);
 brief.addEventListener('mouseleave',slideOutInfo);
+
+regis.addEventListener('mouseover',registerIconIn);
+regis.addEventListener('mouseleave',registerIconOut);
+

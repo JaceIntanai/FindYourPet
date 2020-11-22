@@ -16,5 +16,9 @@ urlpatterns = [
     path('peteditchange', views.peteditchange, name='peteditchange'),
     path('pet', views.pet, name="pet"),
     path('search', views.search, name="search"),
-    path('delpet', views.delpet, name="delpet")
+    path('delpet', views.delpet, name="delpet"),
+    path('uploadphoto', views.uploadphoto, name='uploadphoto'),
+    path('report', views.report, name='report'),
+    path('sendrequest', views.sendrequest, name='sendrequest'),
+    path('adminconfirm', views.adminconfirm, name='adminconfirm')
 ]
